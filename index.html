@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCA | Tax Compliance Agent</title>
+    <!-- Modern Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Cinematic Background Elements -->
+    <div class="ambient-glow"></div>
+    <div class="grain-overlay"></div>
+    
+    <!-- Smart Inverted Cursor -->
+    <div class="cursor" id="custom-cursor"></div>
+
+    <!-- Glassmorphic Header -->
+    <header class="glass-nav">
+        <div class="logo">
+            <img src="assets/logos/tca-main-logo.png" alt="Tax Compliance Agent" class="brand-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-flex';">
+            <span class="logo-text" style="display:none;">TCA<span class="logo-dot"></span></span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#" class="active-link" data-hover>Home</a></li>
+                <li><a href="#platform" data-hover>Platform</a></li>
+                <li><a href="#products" data-hover>Products</a></li>
+                <li><a href="#about" data-hover>About</a></li>
+                <li><a href="#contact" data-hover>Contact</a></li>
+            </ul>
+        </nav>
+        <div class="header-actions">
+            <!-- Theme Toggle Button -->
+            <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Theme" data-hover>
+                <i data-lucide="sun" class="theme-icon-sun"></i>
+                <i data-lucide="moon" class="theme-icon-moon"></i>
+            </button>
+            <button class="btn-primary" data-hover>Login / Signup</button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Section 1: Hero -->
+        <section class="hero-section">
+            <!-- 3D Background Canvas -->
+            <div id="canvas-container" class="canvas-container">
+                <canvas id="hero-canvas"></canvas>
+            </div>
+            
+            <div class="content-wrapper text-center hero-content-relative">
+                
+                <div class="hero-eyebrow fade-up">
+                    <span class="live-dot"></span>
+                    FTA-Accredited Peppol Service Provider
+                </div>
+
+                <h1 class="fade-up hero-heading" style="transition-delay: 0.1s;">
+                    Stop reading Peppol slides.<br>
+                    <span class="text-gradient">Be ready for January 2027.</span>
+                </h1>
+                
+                <p class="hero-sub fade-up" style="transition-delay: 0.2s;">
+                    Connect your ERP, validate your data with our AI Gap Analyzer, and clear your first invoice through our UAE Access Point.
+                </p>
+                
+                <div class="interactive-calculator fade-up" style="transition-delay: 0.3s;">
+                    <div class="calc-header">
+                        <i data-lucide="calculator" class="calc-icon"></i>
+                        <h3>Calculate Your Mandate Deadline</h3>
+                    </div>
+                    <div class="calc-inputs">
+                        <div class="select-wrapper">
+                            <select id="revenue-select" class="tca-input">
+                                <option value="" disabled selected>Select Annual Revenue...</option>
+                                <option value="large">Greater than AED 50M</option>
+                                <option value="sme">Less than AED 50M</option>
+                                <option value="gov">Government Entity (B2G)</option>
+                            </select>
+                            <i data-lucide="chevron-down" class="select-icon"></i>
+                        </div>
+                        <button id="calc-btn" class="btn-primary" data-hover>
+                            <span>Check Status</span>
+                            <i data-lucide="arrow-right" class="btn-icon"></i>
+                        </button>
+                    </div>
+                    <div id="calc-result" class="calc-result-box hidden"></div>
+                </div>
+                
+                <div class="hero-trust-row fade-up" style="transition-delay: 0.4s;">
+                    <div class="trust-pill" data-hover>
+                        <i data-lucide="shield-check" class="trust-icon"></i>
+                        ISO/IEC 27001 & 22301
+                    </div>
+                    <div class="trust-pill" data-hover>
+                        <i data-lucide="cloud" class="trust-icon"></i>
+                        Hosted in UAE on AWS
+                    </div>
+                    <div class="trust-pill" data-hover>
+                        <i data-lucide="landmark" class="trust-icon"></i>
+                        OpenPeppol AP & SMP
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Why TCA -->
+        <section id="platform" class="why-section">
+            <div class="content-wrapper">
+                <div class="section-header text-center fade-up">
+                    <h2 class="brand-cyan-text">Why TCA</h2>
+                    <h3 class="bold-statement">Built differently — on purpose.</h3>
+                    <p>The UAE has 20+ ASPs. Most are reskinned global platforms or consultancy-led services. TCA is the only one designed Al-first, around the real bottleneck: getting your business actually ready.</p>
+                </div>
+                
+                <div class="premium-table fade-up">
+                    <div class="table-row table-header">
+                        <div class="col-dim">Dimension</div>
+                        <div class="col-asp">Typical UAE ASP</div>
+                        <div class="col-tca">TCA</div>
+                    </div>
+
+                    <div class="table-row fade-up">
+                        <div class="col-dim">Mental model</div>
+                        <div class="col-asp"><i data-lucide="x" class="icon-x"></i> Sells the destination - Peppol + ASP + UBL.</div>
+                        <div class="col-tca"><i data-lucide="check" class="icon-check"></i> Sells the journey - AI agents for every place you get stuck.</div>
+                    </div>
+
+                    <div class="table-row fade-up">
+                        <div class="col-dim">Pre-compliance work</div>
+                        <div class="col-asp"><i data-lucide="x" class="icon-x"></i> Out of scope. "Hire a consultant for AED 30K-100K."</div>
+                        <div class="col-tca"><i data-lucide="check" class="icon-check"></i> In scope. Free Gap Analyzer + structured remediation tooling.</div>
+                    </div>
+
+                    <div class="table-row fade-up">
+                        <div class="col-dim">Data residency</div>
+                        <div class="col-asp"><i data-lucide="x" class="icon-x"></i> Often EU / Singapore / global cloud.</div>
+                        <div class="col-tca"><i data-lucide="check" class="icon-check"></i> Hosted in the UAE on AWS - zero data leaves the country.</div>
+                    </div>
+
+                    <div class="table-row fade-up">
+                        <div class="col-dim">Al capability</div>
+                        <div class="col-asp"><i data-lucide="x" class="icon-x"></i> A few "AI features" bolted onto SaaS.</div>
+                        <div class="col-tca"><i data-lucide="check" class="icon-check"></i> Gap Analyzer in customers' hands today.</div>
+                    </div>
+
+                    <div class="table-row fade-up">
+                        <div class="col-dim">Trust model</div>
+                        <div class="col-asp"><i data-lucide="x" class="icon-x"></i> Black-box AI. Sign here.</div>
+                        <div class="col-tca"><i data-lucide="check" class="icon-check"></i> Compliance-Specialist-in-the-loop - human review.</div>
+                    </div>
+
+                    <div class="table-row fade-up">
+                        <div class="col-dim">Regional readiness</div>
+                        <div class="col-asp"><i data-lucide="x" class="icon-x"></i> One country, starts from scratch elsewhere.</div>
+                        <div class="col-tca"><i data-lucide="check" class="icon-check"></i> UAE today. Oman on the immediate roadmap.</div>
+                    </div>
+
+                    <div class="table-row fade-up">
+                        <div class="col-dim">Pricing & lock-in</div>
+                        <div class="col-asp"><i data-lucide="x" class="icon-x"></i> Enterprise contracts, multi-year commitments.</div>
+                        <div class="col-tca"><i data-lucide="check" class="icon-check"></i> Transparent SMB-friendly tiers.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: The Mandate Moment -->
+        <section class="mandate-section">
+            <div class="content-wrapper text-center">
+                <div class="section-header fade-up">
+                    <h2 class="brand-cyan-text">The Mandate Moment</h2>
+                    <h3 class="bold-statement">The hard part isn't picking an ASP. It's everything before you can.</h3>
+                    <p class="centered-sub">Most teams underestimate the work. Cleaning master data, mapping your ERP, classifying your items, and aligning trading partners is where the project actually lives and where most fall behind.</p>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card fade-up interactive-card" style="transition-delay: 0.1s;">
+                        <i data-lucide="coins" class="stat-icon"></i>
+                        <h4>AED 30K-100K</h4>
+                        <p>Typical consultant project</p>
+                    </div>
+                    <div class="stat-card fade-up interactive-card" style="transition-delay: 0.2s;">
+                        <i data-lucide="file-box" class="stat-icon"></i>
+                        <h4>~50</h4>
+                        <p>Mandatory PINT AE fields</p>
+                    </div>
+                    <div class="stat-card fade-up interactive-card" style="transition-delay: 0.3s;">
+                        <i data-lucide="radar" class="stat-icon"></i>
+                        <h4>8</h4>
+                        <p>domains Data quality areas to score</p>
+                    </div>
+                    <div class="stat-card fade-up interactive-card" style="transition-delay: 0.4s;">
+                        <i data-lucide="clock" class="stat-icon"></i>
+                        <h4>14 days</h4>
+                        <p>Window to issue every invoice</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Timeline -->
+        <section class="timeline-section">
+            <div class="content-wrapper">
+                <div class="timeline-header fade-up">
+                    <span class="timeline-badge">UAE E-Invoicing Rollout</span>
+                    <h3 class="bold-statement">The phased mandate, in plain English.</h3>
+                    <p class="centered-sub" style="text-align: left; margin: 0; max-width: 900px;">The rollout — set by Ministerial Decision 244/2025 and Cabinet Decision 106/2025 — opens with voluntary onboarding in <span class="brand-cyan-text font-bold">July 2026</span>, becomes mandatory for large taxpayers in <span class="brand-cyan-text font-bold">January 2027</span>, and reaches the rest of the economy by July 2027.</p>
+                </div>
+
+                <div class="timeline-container">
+                    <div class="timeline-line"></div>
+                    <div class="timeline-grid">
+                        <div class="timeline-card fade-up card-cyan interactive-card">
+                            <div class="timeline-dot dot-cyan"></div>
+                            <div class="phase-label text-cyan">VOLUNTARY</div>
+                            <h3>1 July 2026</h3>
+                            <h4>Voluntary go-live opens</h4>
+                            <span class="sub-badge bg-cyan">Any UAE business</span>
+                            <p class="mt-4 text-sm">Onboard early without penalty. Start issuing structured invoices through your accredited ASP.</p>
+                        </div>
+                        <div class="timeline-card fade-up card-green interactive-card">
+                            <div class="timeline-dot dot-green"></div>
+                            <div class="phase-label text-green">PHASE 1</div>
+                            <h3>1 January 2027</h3>
+                            <h4>Large taxpayers — mandatory</h4>
+                            <span class="sub-badge bg-green">Annual revenue ≥ AED 50M</span>
+                            <p class="mt-4 text-sm">ASP must be appointed by 31 July 2026. Every invoice reported through DCTCE within 14 days.</p>
+                        </div>
+                        <div class="timeline-card fade-up card-blue interactive-card">
+                            <div class="timeline-dot dot-blue"></div>
+                            <div class="phase-label text-blue">PHASE 2</div>
+                            <h3>1 July 2027</h3>
+                            <h4>All other VAT-registered</h4>
+                            <span class="sub-badge bg-blue">Revenue < AED 50M</span>
+                            <p class="mt-4 text-sm">ASP must be appointed by 31 March 2027. ~82% of UAE businesses fall in this band.</p>
+                        </div>
+                        <div class="timeline-card fade-up card-yellow interactive-card">
+                            <div class="timeline-dot dot-yellow"></div>
+                            <div class="phase-label text-yellow">PHASE 3</div>
+                            <h3>1 October 2027</h3>
+                            <h4>Government entities (B2G)</h4>
+                            <span class="sub-badge bg-yellow">UAE government bodies</span>
+                            <p class="mt-4 text-sm">B2G in scope. ASP must be appointed by 31 March 2027. B2C remains out of scope.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="penalties-bar fade-up">
+                    <div class="penalties-title">
+                        <span class="text-red">CABINET DECISION 106/2025</span>
+                        <strong>Penalties for non-compliance</strong>
+                    </div>
+                    <div class="penalty-items">
+                        <div><strong>AED 5,000/month</strong> — failure to implement</div>
+                        <div><strong>AED 100</strong>/invoice in wrong format</div>
+                        <div><strong>AED 1,000/day</strong> — system failure unreported</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Interactive Peek Dashboard -->
+        <section class="dashboard-section">
+            <div class="content-wrapper">
+                <div class="section-header text-center fade-up">
+                    <h2 class="brand-cyan-text">FTA Selection Guide Criteria</h2>
+                    <h3 class="bold-statement">The MoF gives buyers a 16-point checklist. Here's how TCA scores.</h3>
+                    <p class="centered-sub">We mapped the entire checklist against our platform—answers in your evaluator's language, not ours.</p>
+                </div>
+                
+                <div class="peek-dashboard fade-up">
+                    <div class="peek-sidebar">
+                        <div class="peek-trigger active" data-target="peek-compliance">
+                            <div>
+                                <h4>Compliance & accreditation</h4>
+                                <span class="score-badge">4/4 met</span>
+                            </div>
+                            <i data-lucide="check-circle-2" class="trigger-icon"></i>
+                        </div>
+                        <div class="peek-trigger" data-target="peek-security">
+                            <div>
+                                <h4>Security & data sovereignty</h4>
+                                <span class="score-badge">4/4 met</span>
+                            </div>
+                            <i data-lucide="shield" class="trigger-icon"></i>
+                        </div>
+                        <div class="peek-trigger" data-target="peek-platform">
+                            <div>
+                                <h4>Platform & reliability</h4>
+                                <span class="score-badge">4/4 met</span>
+                            </div>
+                            <i data-lucide="server" class="trigger-icon"></i>
+                        </div>
+                        <div class="peek-trigger" data-target="peek-commercial">
+                            <div>
+                                <h4>Commercial, support & exit</h4>
+                                <span class="score-badge">4/4 met</span>
+                            </div>
+                            <i data-lucide="briefcase" class="trigger-icon"></i>
+                        </div>
+                    </div>
+
+                    <div class="peek-display">
+                        <!-- Compliance Window -->
+                        <div class="peek-content active" id="peek-compliance">
+                            <div class="peek-grid">
+                                <div class="peek-card interactive-card">
+                                    <div class="peek-card-header">
+                                        <span class="card-num">01</span>
+                                        <h5>FTA accreditation</h5>
+                                    </div>
+                                    <ul class="peek-list">
+                                        <li><i data-lucide="check" class="icon-check"></i> Listed on the MoF pre-approved register since April 2026</li>
+                                        <li><i data-lucide="check" class="icon-check"></i> Accredited under Ministerial Decision No. 64 of 2025</li>
+                                        <li><i data-lucide="check" class="icon-check"></i> Operating under Suntech Business Solutions DMCC</li>
+                                    </ul>
+                                </div>
+                                <div class="peek-card interactive-card">
+                                    <div class="peek-card-header">
+                                        <span class="card-num">02</span>
+                                        <h5>Ministerial Decisions</h5>
+                                    </div>
+                                    <ul class="peek-list">
+                                        <li><i data-lucide="check" class="icon-check"></i> MD 64/2025 — Service Provider eligibility & accreditation</li>
+                                        <li><i data-lucide="check" class="icon-check"></i> MD 243/2025 — Electronic Invoicing System regulations</li>
+                                        <li><i data-lucide="check" class="icon-check"></i> MD 244/2025 — Phased implementation timeline</li>
+                                        <li><i data-lucide="check" class="icon-check"></i> Cabinet Decision 106/2025 — Violations & penalties</li>
+                                    </ul>
+                                </div>
+                                <div class="peek-card interactive-card">
+                                    <div class="peek-card-header">
+                                        <span class="card-num">03</span>
+                                        <h5>Indemnity insurance</h5>
+                                    </div>
+                                    <ul class="peek-list">
+                                        <li><i data-lucide="check" class="icon-check"></i> Professional indemnity cover at the FTA-mandated AED 2.5M minimum</li>
+                                        <li><i data-lucide="check" class="icon-check"></i> Maintained continuously as part of accredited-Provider status</li>
+                                        <li><i data-lucide="check" class="icon-check"></i> Certificate of insurance available on request to qualified buyers</li>
+                                    </ul>
+                                </div>
+                                <div class="peek-card interactive-card">
+                                    <div class="peek-card-header">
+                                        <span class="card-num">04</span>
+                                        <h5>Audit & retention</h5>
+                                    </div>
+                                    <ul class="peek-list">
+                                        <li><i data-lucide="check" class="icon-check"></i> Full document lifecycle persisted with cryptographic audit trail</li>
+                                        <li><i data-lucide="check" class="icon-check"></i> Records retained for 7 years per UAE record-keeping requirements</li>
+                                        <li><i data-lucide="check" class="icon-check"></i> Searchable export by date / counterparty / status / TRN</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Security Window -->
+                        <div class="peek-content" id="peek-security">
+                            <div class="peek-grid">
+                                <div class="peek-card interactive-card">
+                                    <div class="peek-card-header">
+                                        <span class="card-num">05</span>
+                                        <h5>Data residency</h5>
+                                    </div>
+                                    <ul class="peek-list">
+                                        <li><i data-lucide="check" class="icon-check"></i> Hosted in UAE on AWS — zero cross-border transfer</li>
+                                        <li><i data-lucide="check" class="icon-check"></i> No cross-border data transfers without explicit customer consent</li>
+                                        <li><i data-lucide="check" class="icon-check"></i> Backups remain in the AWS UAE region</li>
+                                    </ul>
+                                </div>
+                                <div class="peek-card interactive-card">
+                                    <div class="peek-card-header">
+                                        <span class="card-num">06</span>
+                                        <h5>Encryption</h5>
+                                    </div>
+                                    <ul class="peek-list">
+                                        <li><i data-lucide="check" class="icon-check"></i> AES-256 at rest via AWS KMS customer-managed keys</li>
+                                        <li><i data-lucide="check" class="icon-check"></i> TLS 1.3 in transit on every Peppol AS4 message</li>
+                                        <li><i data-lucide="check" class="icon-check"></i> Application-layer encryption on the most sensitive PII fields
+</li>
+                                    </ul>
+                                </div>
+                                <div class="peek-card interactive-card">
+                                    <div class="peek-card-header">
+                                        <span class="card-num">07</span>
+                                        <h5>Access controls</h5>
+                                    </div>
+                                    <ul class="peek-list">
+                                        <li><i data-lucide="check" class="icon-check"></i> MFA required on every administrative login</li>
+                                        <li><i data-lucide="check" class="icon-check"></i> Role-based access control across customer + Suntech operators</li>
+                                        <li><i data-lucide="check" class="icon-check"></i> Full session and audit logging on every privileged action</li>
+                                    </ul>
+                                </div>
+                                <div class="peek-card interactive-card">
+                                    <div class="peek-card-header">
+                                        <span class="card-num">08</span>
+                                        <h5>Certifications</h5>
+                                    </div>
+                                    <ul class="peek-list">
+                                        <li><i data-lucide="check" class="icon-check"></i> ISO/IEC 27001 certified (via Suntech)</li>
+                                        <li><i data-lucide="check" class="icon-check"></i> ISO 22301 certified (via Suntech)</li>
+                                        <li><i data-lucide="check" class="icon-check"></i> SOC 2 Type II</li>
+                                        <li><i data-lucide="check" class="icon-check"></i> Annual third-party penetration test/VAPT on production</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Platform Window -->
+                        <div class="peek-content" id="peek-platform">
+                            <div class="peek-grid">
+                                <div class="peek-card interactive-card">
+                                    <div class="peek-card-header">
+                                        <span class="card-num">09</span>
+                                        <h5>Uptime guarantee</h5>
+                                    </div>
+                                    <ul class="peek-list">
+                                        <li><i data-lucide="check" class="icon-check"></i> 99.9% monthly uptime SLA</li>
+                                        <li><i data-lucide="check" class="icon-check"></i> Public status page with real-time component health</li>
+                                        <li><i data-lucide="check" class="icon-check"></i> Service credits for SLA breaches built into the contract</li>
+                                    </ul>
+                                </div>
+                                <div class="peek-card interactive-card">
+                                    <div class="peek-card-header">
+                                        <span class="card-num">10</span>
+                                        <h5>Performance</h5>
+                                    </div>
+                                    <ul class="peek-list">
+                                        <li><i data-lucide="check" class="icon-check"></i> Designed for sub-second clearance on standard tax invoices</li>
+                                        <li><i data-lucide="check" class="icon-check"></i> Horizontally scalable on AWS — burst to thousands of invoices/min</li>
+                                        <li><i data-lucide="check" class="icon-check"></i> Asynchronous workflows absorb spikes without loss</li>
+                                    </ul>
+                                </div>
+                                <div class="peek-card interactive-card">
+                                    <div class="peek-card-header">
+                                        <span class="card-num">11</span>
+                                        <h5>Pilot programme</h5>
+                                    </div>
+                                    <ul class="peek-list">
+                                        <li><i data-lucide="check" class="icon-check"></i> Full sandbox tenant on day one — separate from production</li>
+                                        <li><i data-lucide="check" class="icon-check"></i> Connect your test ERP, run real invoice payloads, no penalties</li>
+                                        <li><i data-lucide="check" class="icon-check"></i> Structured 30-day pilot with go-live readiness sign-off</li>
+                                    </ul>
+                                </div>
+                                <div class="peek-card interactive-card">
+                                    <div class="peek-card-header">
+                                        <span class="card-num">12</span>
+                                        <h5>Disaster recovery</h5>
+                                    </div>
+                                    <ul class="peek-list">
+                                        <li><i data-lucide="check" class="icon-check"></i> Multi-AZ deployment in the AWS UAE region</li>
+                                        <li><i data-lucide="check" class="icon-check"></i> Documented RTO ≤ 4 hours and RPO ≤ 15 minutes</li>
+                                        <li><i data-lucide="check" class="icon-check"></i> DR runbook tested at least annually</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Commercial Window -->
+                        <div class="peek-content" id="peek-commercial">
+                            <div class="peek-grid">
+                                <div class="peek-card interactive-card">
+                                    <div class="peek-card-header">
+                                        <span class="card-num">13</span>
+                                        <h5>Transparent pricing</h5>
+                                    </div>
+                                    <ul class="peek-list">
+                                        <li><i data-lucide="check" class="icon-check"></i> Three published tiers in AED — see /pricing</li>
+                                        <li><i data-lucide="check" class="icon-check"></i> No multi-year lock-in; month-to-month after first year</li>
+                                        <li><i data-lucide="check" class="icon-check"></i> Setup, training, and standard support included in the tier price</li>
+                                    </ul>
+                                </div>
+                                <div class="peek-card interactive-card">
+                                    <div class="peek-card-header">
+                                        <span class="card-num">14</span>
+                                        <h5>Support SLAs</h5>
+                                    </div>
+                                    <ul class="peek-list">
+                                        <li><i data-lucide="check" class="icon-check"></i> Critical (production down) — 1 hour response, 24×7</li>
+                                        <li><i data-lucide="check" class="icon-check"></i> High (live invoice failing) — 4 hours business-day</li>
+                                        <li><i data-lucide="check" class="icon-check"></i> Dedicated success manager on Live ASP tier</li>
+                                    </ul>
+                                </div>
+                                <div class="peek-card interactive-card">
+                                    <div class="peek-card-header">
+                                        <span class="card-num">15</span>
+                                        <h5>Onboarding</h5>
+                                    </div>
+                                    <ul class="peek-list">
+                                        <li><i data-lucide="check" class="icon-check"></i> Day-by-day onboarding playbook (see "30 days" section above)</li>
+                                        <li><i data-lucide="check" class="icon-check"></i> Live training for finance + IT teams during onboarding</li>
+                                        <li><i data-lucide="check" class="icon-check"></i> Knowledge base, video walkthroughs, and quarterly mandate webinars</li>
+                                    </ul>
+                                </div>
+                                <div class="peek-card interactive-card">
+                                    <div class="peek-card-header">
+                                        <span class="card-num">16</span>
+                                        <h5>Exit portability</h5>
+                                    </div>
+                                    <ul class="peek-list">
+                                        <li><i data-lucide="check" class="icon-check"></i> Full historical export (UBL XML + structured CSV) on request</li>
+                                        <li><i data-lucide="check" class="icon-check"></i> 30-day transition window with handover support to your next ASP</li>
+                                        <li><i data-lucide="check" class="icon-check"></i> Records retained per UAE law even after contract termination</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="procurement-box fade-up">
+                    <div class="procurement-content">
+                        <h3>NEED THIS IN A PROCUREMENT TEMPLATE?</h3>
+                        <p>We provide a full vendor-evaluation pack - RFP-ready answers, certifications, and DPA on request.</p>
+                    </div>
+                    <button class="btn-primary" data-hover>Request the pack</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6: GCC Ready & Logos -->
+        <section class="gcc-section">
+            <div class="content-wrapper">
+                <div class="section-header text-center fade-up">
+                    <h2 class="brand-cyan-text">BUILT FOR THE UAE. DESIGNED FOR THE GCC.</h2>
+                    <h3 class="bold-statement">One platform. Regional ready.</h3>
+                    <p class="centered-sub">E-invoicing is local - but the engine doesn't have to be. We built TCA so every new jurisdiction sharpens the platform for everyone on it. UAE is live today; Oman is on the immediate roadmap.</p>
+                </div>
+                
+                <div class="gcc-grid fade-up">
+                    <div class="gcc-card interactive-card uae-card">
+                        <div class="gcc-bg-text">AE</div>
+                        <div class="gcc-badge uae-badge"><span class="live-dot" style="display:inline-block; margin-right:5px;"></span> LIVE</div>
+                        <h3>United Arab Emirates</h3>
+                        <h4 class="uae-sub">FTA-Accredited Peppol Access Point</h4>
+                        <ul class="gcc-list">
+                            <li><i data-lucide="check" class="icon-check"></i> Pre-approved Service Provider</li>
+                            <li><i data-lucide="check" class="icon-check"></i> Hosted in the UAE on AWS</li>
+                        </ul>
+                    </div>
+                    <div class="gcc-card interactive-card oman-card">
+                        <div class="gcc-bg-text">OM</div>
+                        <div class="gcc-badge oman-badge">JUL-AUG 2026</div>
+                        <h3>Sultanate of Oman</h3>
+                        <h4 class="oman-sub">On the immediate roadmap</h4>
+                        <ul class="gcc-list">
+                            <li><i data-lucide="arrow-right" class="brand-cyan-text"></i> Same agent fleet, regional specs</li>
+                            <li><i data-lucide="arrow-right" class="brand-cyan-text"></i> Shared data model with UAE tenants</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="trusted-section fade-up" style="margin-top: 80px;">
+                    <div class="grand-header-container text-center">
+                        <h2 class="bold-statement text-glow-brand">TRUSTED ACROSS THE UAE 15+ YEARS</h2>
+                        <p class="centered-sub">
+                            <span class="brand-cyan-text" style="font-size: 1.5rem; font-weight: 800;">1500+</span> clients of the Suntech group. Across financial institutions, public sector, and private enterprise.
+                        </p>
+                    </div>
+                    
+                    <div class="slider-wrapper">
+                        <div class="logo-track">
+                            <!-- Dummy structure for logos to match original class names and alt texts -->
+                            <div class="logo-item"><img src="assets/logos/mashreq.png" alt="Mashreq" onerror="this.outerHTML='<span class=\'fallback-logo\'>Mashreq</span>'"></div>
+                            <div class="logo-item"><img src="assets/logos/dof.png" alt="Department of Finance" onerror="this.outerHTML='<span class=\'fallback-logo\'>Department of Finance</span>'"></div>
+                            <div class="logo-item"><img src="assets/logos/emirates.png" alt="Emirates Dnata" onerror="this.outerHTML='<span class=\'fallback-logo\'>Emirates Dnata</span>'"></div>
+                            <div class="logo-item"><img src="assets/logos/sadafco.png" alt="Sadafco" onerror="this.outerHTML='<span class=\'fallback-logo\'>Sadafco</span>'"></div>
+                            <div class="logo-item"><img src="assets/logos/reliance.png" alt="Reliance" onerror="this.outerHTML='<span class=\'fallback-logo\'>Reliance</span>'"></div>
+                            <div class="logo-item"><img src="assets/logos/alshirawi.png" alt="Al Shirawi" onerror="this.outerHTML='<span class=\'fallback-logo\'>Al Shirawi</span>'"></div>
+                            
+                            <!-- Duplicates for Infinite Loop -->
+                            <div class="logo-item"><img src="assets/logos/mashreq.png" alt="Mashreq" onerror="this.outerHTML='<span class=\'fallback-logo\'>Mashreq</span>'"></div>
+                            <div class="logo-item"><img src="assets/logos/dof.png" alt="Department of Finance" onerror="this.outerHTML='<span class=\'fallback-logo\'>Department of Finance</span>'"></div>
+                            <div class="logo-item"><img src="assets/logos/emirates.png" alt="Emirates Dnata" onerror="this.outerHTML='<span class=\'fallback-logo\'>Emirates Dnata</span>'"></div>
+                            <div class="logo-item"><img src="assets/logos/sadafco.png" alt="Sadafco" onerror="this.outerHTML='<span class=\'fallback-logo\'>Sadafco</span>'"></div>
+                            <div class="logo-item"><img src="assets/logos/reliance.png" alt="Reliance" onerror="this.outerHTML='<span class=\'fallback-logo\'>Reliance</span>'"></div>
+                            <div class="logo-item"><img src="assets/logos/alshirawi.png" alt="Al Shirawi" onerror="this.outerHTML='<span class=\'fallback-logo\'>Al Shirawi</span>'"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 7: FAQ -->
+        <section class="faq-section">
+            <div class="content-wrapper text-center">
+                <div class="section-header fade-up">
+                    <span class="timeline-badge">FAQ</span>
+                    <h2 class="bold-statement" style="margin-top: 15px;">Questions, answered.</h2>
+                    <p class="centered-sub">Everything we get asked the most about the UAE mandate, our platform, and how to get started.</p>
+                </div>
+                
+                <div class="modern-faq-container fade-up">
+                    <div class="faq-card">
+                        <div class="faq-card-header" data-hover><h4>When does UAE e-invoicing become mandatory?</h4><i data-lucide="chevron-down" class="chevron"></i></div>
+                        <div class="faq-card-body"><p>Phase 1 starts Jan 1, 2027.</p></div>
+                    </div>
+                    <div class="faq-card">
+                        <div class="faq-card-header" data-hover><h4>What model has the UAE adopted?</h4><i data-lucide="chevron-down" class="chevron"></i></div>
+                        <div class="faq-card-body"><p>The UAE has adopted the Peppol PINT AE model.</p></div>
+                    </div>
+                    <div class="faq-card">
+                        <div class="faq-card-header" data-hover><h4>Is TCA an FTA-accredited Service Provider?</h4><i data-lucide="chevron-down" class="chevron"></i></div>
+                        <div class="faq-card-body"><p>Yes, we are officially pre-approved.</p></div>
+                    </div>
+                    <div class="faq-card">
+                        <div class="faq-card-header" data-hover><h4>What are the penalties for non-compliance?</h4><i data-lucide="chevron-down" class="chevron"></i></div>
+                        <div class="faq-card-body"><p>Up to AED 5,000/month for failure to implement.</p></div>
+                    </div>
+                    <div class="faq-card">
+                        <div class="faq-card-header" data-hover><h4>Where is our data stored?</h4><i data-lucide="chevron-down" class="chevron"></i></div>
+                        <div class="faq-card-body"><p>Hosted in the UAE on AWS—zero data leaves the country.</p></div>
+                    </div>
+                    <div class="faq-card">
+                        <div class="faq-card-header" data-hover><h4>How is TCA different from ClearTax, Comarch, Cygnet, or Pagero?</h4><i data-lucide="chevron-down" class="chevron"></i></div>
+                        <div class="faq-card-body"><p>TCA is the only one designed AI-first, focused heavily on the pre-compliance data cleanup rather than just the final transmission.</p></div>
+                    </div>
+                    <div class="faq-card">
+                        <div class="faq-card-header" data-hover><h4>Do I need to replace my ERP?</h4><i data-lucide="chevron-down" class="chevron"></i></div>
+                        <div class="faq-card-body"><p>No, we connect directly via API/SFTP.</p></div>
+                    </div>
+                    <div class="faq-card">
+                        <div class="faq-card-header" data-hover><h4>How long does onboarding take?</h4><i data-lucide="chevron-down" class="chevron"></i></div>
+                        <div class="faq-card-body"><p>Typically in under 30 days, aided by our automated Gap Analyzer.</p></div>
+                    </div>
+                    <div class="faq-card">
+                        <div class="faq-card-header" data-hover><h4>Who is behind TCA?</h4><i data-lucide="chevron-down" class="chevron"></i></div>
+                        <div class="faq-card-body"><p>Tax Compliance Agent is the AI-native UAE e-invoicing business line of Suntech Business Solutions.</p></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Mega Footer -->
+    <footer class="mega-footer">
+        <div class="content-wrapper">
+            <div class="footer-grid">
+                
+                <div class="footer-brand">
+                    <img src="assets/logos/tca-main-logo.png" alt="Tax Compliance Agent" class="brand-logo-footer" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <h3 class="footer-logo" style="display:none;">TCA</h3>
+                    <p class="footer-desc">The Al-native UAE e-invoicing business line of <span class="brand-cyan-text" style="font-size:inherit;">Suntech Business Solutions</span>. FTA-Accredited Service Provider.</p>
+                    
+                    <div class="social-icons">
+                        <a href="#" class="icon-box" data-hover><i data-lucide="linkedin"></i></a>
+                        <a href="#" class="icon-box" data-hover><i data-lucide="mail"></i></a>
+                    </div>
+                    <ul class="contact-list">
+                        <li><i data-lucide="map-pin"></i> Deira — Dubai, UAE</li>
+                        <li><i data-lucide="mail"></i> einvoicing@suntech-global.com</li>
+                        <li><i data-lucide="phone"></i> +971 52 569 5428</li>
+                    </ul>
+                </div>
+
+                <div class="footer-links">
+                    <h4>PLATFORM</h4>
+                    <ul>
+                        <li><a href="#" data-hover>Platform overview</a></li>
+                        <li><a href="#" data-hover>Integrations</a></li>
+                        <li><a href="#" data-hover>Pricing</a></li>
+                        <li><a href="#" data-hover>FTA selection guide</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>PRODUCTS</h4>
+                    <ul>
+                        <li><a href="#" data-hover>Customer Portal</a></li>
+                        <li><a href="#" data-hover>Gap Analyzer</a></li>
+                        <li><a href="#" data-hover>Sign in to portal ↗</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>COMPANY</h4>
+                    <ul>
+                        <li><a href="#" data-hover>About</a></li>
+                        <li><a href="#" data-hover>Team</a></li>
+                        <li><a href="#" data-hover>Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>REFERENCES</h4>
+                    <ul>
+                        <li><a href="#" data-hover>UAE MoF · e-Invoicing</a></li>
+                        <li><a href="#" data-hover>MoF Pre-Approved ASP</a></li>
+                        <li><a href="#" data-hover>OpenPeppol directory</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="badges-banner">
+                <div class="banner-title">CERTIFIED · ACCREDITED · AUDITED</div>
+                <div class="badge-row">
+                    <div class="footer-badge-item interactive-card">
+                        <img src="assets/logos/peppol-badge.png" alt="Peppol" class="real-peppol-badge" onerror="this.outerHTML='<div class=\'css-circle circle-blue\'>PEPPOL</div>'">
+                        <div class="badge-text" style="display:none;"><strong>OpenPeppol</strong><br>Certified</div>
+                    </div>
+                    <div class="footer-badge-item interactive-card">
+                        <div class="css-circle circle-green">UAE FTA</div>
+                        <div class="badge-text"><strong>FTA-Accredited</strong><br>UAE MoF</div>
+                    </div>
+                    <div class="footer-badge-item interactive-card">
+                        <div class="css-circle circle-purple">ISO 27001</div>
+                        <div class="badge-text"><strong>ISO/IEC 27001</strong><br>Information Security</div>
+                    </div>
+                    <div class="footer-badge-item interactive-card">
+                        <div class="css-circle circle-green">ISO 22301</div>
+                        <div class="badge-text"><strong>ISO 22301</strong><br>Business Continuity</div>
+                    </div>
+                    <div class="footer-badge-item interactive-card">
+                        <div class="css-circle circle-orange">AWS UAE</div>
+                        <div class="badge-text"><strong>AWS UAE Region</strong><br>Hosted in the UAE</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="disclaimer-box">
+                <p>Tax Compliance Agent is a business line of <span class="brand-cyan-text" style="font-size:inherit;">Suntech Business Solutions</span> (Suntech Business Solutions DMCC), a pre-approved e-invoicing Service Provider listed by the UAE Ministry of Finance and a certified OpenPeppol member. ISO/IEC 27001 and ISO 22301 certified via Suntech.</p>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2026 Tax Compliance Agent · a Suntech Business Solutions company. All rights reserved.</p>
+                <div class="legal-links">
+                    <a href="#" data-hover>Privacy Policy</a>
+                    <a href="#" data-hover>Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="script.js"></script>
+</body>
+</html>
