@@ -7,7 +7,7 @@
     <!-- Modern Typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -20,13 +20,14 @@
     <div class="cursor" id="custom-cursor"></div>
 
     <!-- Glassmorphic Header -->
-    <header class="glass-nav">
+    <header class="glass-nav" id="site-nav">
         <div class="logo">
             <img src="assets/logos/tca-main-logo.png" alt="Tax Compliance Agent" class="brand-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-flex';">
             <span class="logo-text" style="display:none;">TCA<span class="logo-dot"></span></span>
         </div>
-        <nav>
-            <ul>
+        <nav class="primary-nav">
+            <ul id="nav-list">
+                <span class="nav-indicator" id="nav-indicator" aria-hidden="true"></span>
                 <li><a href="#" class="active-link" data-hover>Home</a></li>
                 <li><a href="#platform" data-hover>Platform</a></li>
                 <li><a href="#products" data-hover>Products</a></li>
@@ -40,9 +41,28 @@
                 <i data-lucide="sun" class="theme-icon-sun"></i>
                 <i data-lucide="moon" class="theme-icon-moon"></i>
             </button>
-            <button class="btn-primary" data-hover>Login / Signup</button>
+            <button class="btn-primary desktop-only" data-hover>Login / Signup</button>
+            <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Open menu" aria-expanded="false" data-hover>
+                <i data-lucide="menu" class="menu-icon-open"></i>
+                <i data-lucide="x" class="menu-icon-close"></i>
+            </button>
         </div>
     </header>
+
+    <!-- Mobile Navigation Drawer -->
+    <div class="mobile-drawer" id="mobile-drawer">
+        <nav class="mobile-drawer-nav">
+            <ul>
+                <li><a href="#" class="active-link" data-hover>Home</a></li>
+                <li><a href="#platform" data-hover>Platform</a></li>
+                <li><a href="#products" data-hover>Products</a></li>
+                <li><a href="#about" data-hover>About</a></li>
+                <li><a href="#contact" data-hover>Contact</a></li>
+            </ul>
+        </nav>
+        <button class="btn-primary mobile-drawer-cta" data-hover>Login / Signup</button>
+    </div>
+    <div class="mobile-drawer-backdrop" id="mobile-drawer-backdrop"></div>
 
     <main>
         <!-- Section 1: Hero -->
@@ -114,7 +134,7 @@
                 <div class="section-header text-center fade-up">
                     <h2 class="brand-cyan-text">Why TCA</h2>
                     <h3 class="bold-statement">Built differently — on purpose.</h3>
-                    <p>The UAE has 20+ ASPs. Most are reskinned global platforms or consultancy-led services. TCA is the only one designed Al-first, around the real bottleneck: getting your business actually ready.</p>
+                    <p>The UAE has 20+ ASPs. Most are reskinned global platforms or consultancy-led services. TCA is the only one designed AI-first, around the real bottleneck: getting your business actually ready.</p>
                 </div>
                 
                 <div class="premium-table fade-up">
@@ -143,7 +163,7 @@
                     </div>
 
                     <div class="table-row fade-up">
-                        <div class="col-dim">Al capability</div>
+                        <div class="col-dim">AI capability</div>
                         <div class="col-asp"><i data-lucide="x" class="icon-x"></i> A few "AI features" bolted onto SaaS.</div>
                         <div class="col-tca"><i data-lucide="check" class="icon-check"></i> Gap Analyzer in customers' hands today.</div>
                     </div>
@@ -177,29 +197,114 @@
                     <h3 class="bold-statement">The hard part isn't picking an ASP. It's everything before you can.</h3>
                     <p class="centered-sub">Most teams underestimate the work. Cleaning master data, mapping your ERP, classifying your items, and aligning trading partners is where the project actually lives and where most fall behind.</p>
                 </div>
-                
-                <div class="stats-grid">
-                    <div class="stat-card fade-up interactive-card" style="transition-delay: 0.1s;">
-                        <i data-lucide="coins" class="stat-icon"></i>
-                        <h4>AED 30K-100K</h4>
-                        <p>Typical consultant project</p>
+
+                <div class="mandate-carousel fade-up" id="mandate-carousel">
+                    <div class="mandate-bg-blobs" aria-hidden="true">
+                        <span class="mandate-blob blob-cyan"></span>
+                        <span class="mandate-blob blob-blue"></span>
+                        <span class="mandate-blob blob-mint"></span>
                     </div>
-                    <div class="stat-card fade-up interactive-card" style="transition-delay: 0.2s;">
-                        <i data-lucide="file-box" class="stat-icon"></i>
-                        <h4>~50</h4>
-                        <p>Mandatory PINT AE fields</p>
+                    <div class="carousel-stage" id="carousel-stage">
+
+                        <div class="carousel-card accent-cyan" data-index="0">
+                            <div class="card-flip-inner">
+                                <div class="card-face card-front">
+                                    <div class="stat-card-top">
+                                        <span class="stat-icon-badge"><i data-lucide="coins" class="stat-icon"></i></span>
+                                        <i data-lucide="repeat" class="stat-corner-arrow" aria-hidden="true"></i>
+                                    </div>
+                                    <h4>AED 30K-100K</h4>
+                                    <div class="stat-visual" aria-hidden="true"><i data-lucide="coins" class="stat-visual-icon"></i></div>
+                                    <p>Typical consultant project</p>
+                                    <span class="flip-hint">Tap to flip</span>
+                                </div>
+                                <div class="card-face card-back">
+                                    <span class="stat-icon-badge"><i data-lucide="coins" class="stat-icon"></i></span>
+                                    <h4>AED 30K-100K</h4>
+                                    <p>Typical consultant project</p>
+                                    <span class="flip-hint">Tap to flip back</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="carousel-card accent-blue" data-index="1">
+                            <div class="card-flip-inner">
+                                <div class="card-face card-front">
+                                    <div class="stat-card-top">
+                                        <span class="stat-icon-badge"><i data-lucide="file-box" class="stat-icon"></i></span>
+                                        <i data-lucide="repeat" class="stat-corner-arrow" aria-hidden="true"></i>
+                                    </div>
+                                    <h4>~50</h4>
+                                    <div class="stat-visual" aria-hidden="true"><i data-lucide="file-box" class="stat-visual-icon"></i></div>
+                                    <p>Mandatory PINT AE fields</p>
+                                    <span class="flip-hint">Tap to flip</span>
+                                </div>
+                                <div class="card-face card-back">
+                                    <span class="stat-icon-badge"><i data-lucide="file-box" class="stat-icon"></i></span>
+                                    <h4>~50</h4>
+                                    <p>Mandatory PINT AE fields</p>
+                                    <span class="flip-hint">Tap to flip back</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="carousel-card accent-mint" data-index="2">
+                            <div class="card-flip-inner">
+                                <div class="card-face card-front">
+                                    <div class="stat-card-top">
+                                        <span class="stat-icon-badge"><i data-lucide="radar" class="stat-icon"></i></span>
+                                        <i data-lucide="repeat" class="stat-corner-arrow" aria-hidden="true"></i>
+                                    </div>
+                                    <h4>8</h4>
+                                    <div class="stat-visual" aria-hidden="true"><i data-lucide="radar" class="stat-visual-icon"></i></div>
+                                    <p>domains Data quality areas to score</p>
+                                    <span class="flip-hint">Tap to flip</span>
+                                </div>
+                                <div class="card-face card-back">
+                                    <span class="stat-icon-badge"><i data-lucide="radar" class="stat-icon"></i></span>
+                                    <h4>8</h4>
+                                    <p>domains Data quality areas to score</p>
+                                    <span class="flip-hint">Tap to flip back</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="carousel-card accent-yellow" data-index="3">
+                            <div class="card-flip-inner">
+                                <div class="card-face card-front">
+                                    <div class="stat-card-top">
+                                        <span class="stat-icon-badge"><i data-lucide="clock" class="stat-icon"></i></span>
+                                        <i data-lucide="repeat" class="stat-corner-arrow" aria-hidden="true"></i>
+                                    </div>
+                                    <h4>14 days</h4>
+                                    <div class="stat-visual" aria-hidden="true"><i data-lucide="clock" class="stat-visual-icon"></i></div>
+                                    <p>Window to issue every invoice</p>
+                                    <span class="flip-hint">Tap to flip</span>
+                                </div>
+                                <div class="card-face card-back">
+                                    <span class="stat-icon-badge"><i data-lucide="clock" class="stat-icon"></i></span>
+                                    <h4>14 days</h4>
+                                    <p>Window to issue every invoice</p>
+                                    <span class="flip-hint">Tap to flip back</span>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
-                    <div class="stat-card fade-up interactive-card" style="transition-delay: 0.3s;">
-                        <i data-lucide="radar" class="stat-icon"></i>
-                        <h4>8</h4>
-                        <p>domains Data quality areas to score</p>
-                    </div>
-                    <div class="stat-card fade-up interactive-card" style="transition-delay: 0.4s;">
-                        <i data-lucide="clock" class="stat-icon"></i>
-                        <h4>14 days</h4>
-                        <p>Window to issue every invoice</p>
+
+                    <div class="carousel-nav">
+                        <div class="carousel-dots-glass" id="carousel-dots-glass">
+                            <div class="carousel-dots" id="carousel-dots">
+                                <button class="carousel-dot active" data-goto="0" aria-label="Card 1" data-hover></button>
+                                <button class="carousel-dot" data-goto="1" aria-label="Card 2" data-hover></button>
+                                <button class="carousel-dot" data-goto="2" aria-label="Card 3" data-hover></button>
+                                <button class="carousel-dot" data-goto="3" aria-label="Card 4" data-hover></button>
+                                <span class="carousel-dot-blob" id="carousel-dot-blob" aria-hidden="true"></span>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                <p class="mandate-hint fade-up"><i data-lucide="mouse-pointer-2"></i> Click the centre card to flip it — click a peeking card to bring it forward</p>
             </div>
         </section>
 
@@ -212,8 +317,8 @@
                     <p class="centered-sub" style="text-align: left; margin: 0; max-width: 900px;">The rollout — set by Ministerial Decision 244/2025 and Cabinet Decision 106/2025 — opens with voluntary onboarding in <span class="brand-cyan-text font-bold">July 2026</span>, becomes mandatory for large taxpayers in <span class="brand-cyan-text font-bold">January 2027</span>, and reaches the rest of the economy by July 2027.</p>
                 </div>
 
-                <div class="timeline-container">
-                    <div class="timeline-line"></div>
+                <div class="timeline-container" id="timeline-container">
+                    <div class="timeline-line"><div class="timeline-line-fill" id="timeline-fill"></div></div>
                     <div class="timeline-grid">
                         <div class="timeline-card fade-up card-cyan interactive-card">
                             <div class="timeline-dot dot-cyan"></div>
@@ -554,31 +659,33 @@
                 </div>
 
                 <div class="trusted-section fade-up" style="margin-top: 80px;">
-                    <div class="grand-header-container text-center">
-                        <h2 class="bold-statement text-glow-brand">TRUSTED ACROSS THE UAE 15+ YEARS</h2>
-                        <p class="centered-sub">
-                            <span class="brand-cyan-text" style="font-size: 1.5rem; font-weight: 800;">1500+</span> clients of the Suntech group. Across financial institutions, public sector, and private enterprise.
-                        </p>
-                    </div>
-                    
-                    <div class="slider-wrapper">
-                        <div class="logo-track">
-                            <!-- Dummy structure for logos to match original class names and alt texts -->
-                            <div class="logo-item"><img src="assets/logos/mashreq.png" alt="Mashreq" onerror="this.outerHTML='<span class=\'fallback-logo\'>Mashreq</span>'"></div>
-                            <div class="logo-item"><img src="assets/logos/dof.png" alt="Department of Finance" onerror="this.outerHTML='<span class=\'fallback-logo\'>Department of Finance</span>'"></div>
-                            <div class="logo-item"><img src="assets/logos/emirates.png" alt="Emirates Dnata" onerror="this.outerHTML='<span class=\'fallback-logo\'>Emirates Dnata</span>'"></div>
-                            <div class="logo-item"><img src="assets/logos/sadafco.png" alt="Sadafco" onerror="this.outerHTML='<span class=\'fallback-logo\'>Sadafco</span>'"></div>
-                            <div class="logo-item"><img src="assets/logos/reliance.png" alt="Reliance" onerror="this.outerHTML='<span class=\'fallback-logo\'>Reliance</span>'"></div>
-                            <div class="logo-item"><img src="assets/logos/alshirawi.png" alt="Al Shirawi" onerror="this.outerHTML='<span class=\'fallback-logo\'>Al Shirawi</span>'"></div>
-                            
-                            <!-- Duplicates for Infinite Loop -->
-                            <div class="logo-item"><img src="assets/logos/mashreq.png" alt="Mashreq" onerror="this.outerHTML='<span class=\'fallback-logo\'>Mashreq</span>'"></div>
-                            <div class="logo-item"><img src="assets/logos/dof.png" alt="Department of Finance" onerror="this.outerHTML='<span class=\'fallback-logo\'>Department of Finance</span>'"></div>
-                            <div class="logo-item"><img src="assets/logos/emirates.png" alt="Emirates Dnata" onerror="this.outerHTML='<span class=\'fallback-logo\'>Emirates Dnata</span>'"></div>
-                            <div class="logo-item"><img src="assets/logos/sadafco.png" alt="Sadafco" onerror="this.outerHTML='<span class=\'fallback-logo\'>Sadafco</span>'"></div>
-                            <div class="logo-item"><img src="assets/logos/reliance.png" alt="Reliance" onerror="this.outerHTML='<span class=\'fallback-logo\'>Reliance</span>'"></div>
-                            <div class="logo-item"><img src="assets/logos/alshirawi.png" alt="Al Shirawi" onerror="this.outerHTML='<span class=\'fallback-logo\'>Al Shirawi</span>'"></div>
+                    <div class="trust-arc-stage" id="trust-arc-stage">
+                        <div class="trust-arc-glow" aria-hidden="true"></div>
+                        <div class="trust-arc" id="trust-arc">
+                            <div class="arc-logo" style="--angle: -72deg;"><img src="assets/logos/mashreq.png" alt="Mashreq" onerror="this.outerHTML='<span class=\'fallback-logo\'>Mashreq</span>'"></div>
+                            <div class="arc-logo" style="--angle: -43deg;"><img src="assets/logos/dof.png" alt="Department of Finance" onerror="this.outerHTML='<span class=\'fallback-logo\'>Department of Finance</span>'"></div>
+                            <div class="arc-logo" style="--angle: -15deg;"><img src="assets/logos/emirates.png" alt="Emirates Dnata" onerror="this.outerHTML='<span class=\'fallback-logo\'>Emirates Dnata</span>'"></div>
+                            <div class="arc-logo" style="--angle: 15deg;"><img src="assets/logos/sadafco.png" alt="Sadafco" onerror="this.outerHTML='<span class=\'fallback-logo\'>Sadafco</span>'"></div>
+                            <div class="arc-logo" style="--angle: 43deg;"><img src="assets/logos/reliance.png" alt="Reliance" onerror="this.outerHTML='<span class=\'fallback-logo\'>Reliance</span>'"></div>
+                            <div class="arc-logo" style="--angle: 72deg;"><img src="assets/logos/alshirawi.png" alt="Al Shirawi" onerror="this.outerHTML='<span class=\'fallback-logo\'>Al Shirawi</span>'"></div>
                         </div>
+
+                        <div class="grand-header-container text-center">
+                            <h2 class="bold-statement text-glow-brand">TRUSTED ACROSS THE UAE 15+ YEARS</h2>
+                            <p class="centered-sub">
+                                <span class="brand-cyan-text trusted-count" id="client-counter" data-target="1500">0+</span> clients of the Suntech group. Across financial institutions, public sector, and private enterprise.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Mobile fallback: simple logo grid, arc collapses on small screens -->
+                    <div class="trust-logo-grid" aria-hidden="true">
+                        <div class="logo-item"><img src="assets/logos/mashreq.png" alt="Mashreq" onerror="this.outerHTML='<span class=\'fallback-logo\'>Mashreq</span>'"></div>
+                        <div class="logo-item"><img src="assets/logos/dof.png" alt="Department of Finance" onerror="this.outerHTML='<span class=\'fallback-logo\'>Department of Finance</span>'"></div>
+                        <div class="logo-item"><img src="assets/logos/emirates.png" alt="Emirates Dnata" onerror="this.outerHTML='<span class=\'fallback-logo\'>Emirates Dnata</span>'"></div>
+                        <div class="logo-item"><img src="assets/logos/sadafco.png" alt="Sadafco" onerror="this.outerHTML='<span class=\'fallback-logo\'>Sadafco</span>'"></div>
+                        <div class="logo-item"><img src="assets/logos/reliance.png" alt="Reliance" onerror="this.outerHTML='<span class=\'fallback-logo\'>Reliance</span>'"></div>
+                        <div class="logo-item"><img src="assets/logos/alshirawi.png" alt="Al Shirawi" onerror="this.outerHTML='<span class=\'fallback-logo\'>Al Shirawi</span>'"></div>
                     </div>
                 </div>
             </div>
@@ -643,7 +750,7 @@
                 <div class="footer-brand">
                     <img src="assets/logos/tca-main-logo.png" alt="Tax Compliance Agent" class="brand-logo-footer" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
                     <h3 class="footer-logo" style="display:none;">TCA</h3>
-                    <p class="footer-desc">The Al-native UAE e-invoicing business line of <span class="brand-cyan-text" style="font-size:inherit;">Suntech Business Solutions</span>. FTA-Accredited Service Provider.</p>
+                    <p class="footer-desc">The AI-native UAE e-invoicing business line of <span class="brand-cyan-text" style="font-size:inherit;">Suntech Business Solutions</span>. FTA-Accredited Service Provider.</p>
                     
                     <div class="social-icons">
                         <a href="#" class="icon-box" data-hover><i data-lucide="linkedin"></i></a>
