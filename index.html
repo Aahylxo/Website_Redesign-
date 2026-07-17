@@ -4,22 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TCA | Tax Compliance Agent</title>
-    <!-- Modern Typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="intro-overlay" id="intro-overlay" aria-hidden="true">
+        <canvas id="intro-ascii-canvas" class="intro-ascii-canvas"></canvas>
+        <div class="intro-overlay-content">
+            <span class="intro-text" id="intro-text" aria-label="Tax Compliance Agent">
+                <span class="intro-word">Tax</span>
+                <span class="intro-word">Compliance</span>
+                <span class="intro-word">Agent</span>
+            </span>
+        </div>
+    </div>
 
-    <!-- Cinematic Background Elements -->
-    <div class="ambient-glow"></div>
-    <div class="grain-overlay"></div>
-    
-    <!-- Smart Inverted Cursor -->
+    <div class="silk-backdrop" id="silk-backdrop" aria-hidden="true"></div>
     <div class="cursor" id="custom-cursor"></div>
 
-    <!-- Glassmorphic Header -->
     <header class="glass-nav" id="site-nav">
         <div class="logo">
             <img src="assets/logos/tca-main-logo.png" alt="Tax Compliance Agent" class="brand-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-flex';">
@@ -30,13 +34,37 @@
                 <span class="nav-indicator" id="nav-indicator" aria-hidden="true"></span>
                 <li><a href="#" class="active-link" data-hover>Home</a></li>
                 <li><a href="#platform" data-hover>Platform</a></li>
-                <li><a href="#products" data-hover>Products</a></li>
+                <li class="nav-item-dropdown" id="nav-products-item">
+                    <a href="#products" data-hover class="nav-dropdown-trigger" aria-haspopup="true" aria-expanded="false">
+                        Products
+                        <i data-lucide="chevron-down" class="nav-caret"></i>
+                    </a>
+                    <div class="nav-dropdown-panel" role="menu">
+                        <div class="nav-dropdown-panel-inner">
+                            <a href="#" class="nav-dropdown-link" data-hover role="menuitem" style="--i:0">
+                                <span class="nav-dropdown-icon"><i data-lucide="layout-dashboard"></i></span>
+                                <span class="nav-dropdown-copy"><strong>Customer Portal</strong><small>Track filings & data health</small></span>
+                            </a>
+                            <a href="#" class="nav-dropdown-link" data-hover role="menuitem" style="--i:1">
+                                <span class="nav-dropdown-icon"><i data-lucide="handshake"></i></span>
+                                <span class="nav-dropdown-copy"><strong>PartnerOS</strong><small>Manage referrals & clients</small></span>
+                            </a>
+                            <a href="#" class="nav-dropdown-link" data-hover role="menuitem" style="--i:2">
+                                <span class="nav-dropdown-icon"><i data-lucide="radar"></i></span>
+                                <span class="nav-dropdown-copy"><strong>Gap Analyzer</strong><small>Free readiness scoring</small></span>
+                            </a>
+                            <a href="#" class="nav-dropdown-link" data-hover role="menuitem" style="--i:3">
+                                <span class="nav-dropdown-icon"><i data-lucide="bot"></i></span>
+                                <span class="nav-dropdown-copy"><strong>AI Agent Fleet</strong><small>The agents behind TCA</small></span>
+                            </a>
+                        </div>
+                    </div>
+                </li>
                 <li><a href="#about" data-hover>About</a></li>
                 <li><a href="#contact" data-hover>Contact</a></li>
             </ul>
         </nav>
         <div class="header-actions">
-            <!-- Theme Toggle Button -->
             <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Theme" data-hover>
                 <i data-lucide="sun" class="theme-icon-sun"></i>
                 <i data-lucide="moon" class="theme-icon-moon"></i>
@@ -49,13 +77,22 @@
         </div>
     </header>
 
-    <!-- Mobile Navigation Drawer -->
     <div class="mobile-drawer" id="mobile-drawer">
         <nav class="mobile-drawer-nav">
             <ul>
                 <li><a href="#" class="active-link" data-hover>Home</a></li>
                 <li><a href="#platform" data-hover>Platform</a></li>
-                <li><a href="#products" data-hover>Products</a></li>
+                <li class="mobile-dropdown-item" id="mobile-products-item">
+                    <button type="button" class="mobile-dropdown-trigger" data-hover aria-expanded="false">
+                        Products <i data-lucide="chevron-down" class="nav-caret"></i>
+                    </button>
+                    <div class="mobile-dropdown-panel">
+                        <a href="#" data-hover style="--i:0">Customer Portal</a>
+                        <a href="#" data-hover style="--i:1">PartnerOS</a>
+                        <a href="#" data-hover style="--i:2">Gap Analyzer</a>
+                        <a href="#" data-hover style="--i:3">AI Agent Fleet</a>
+                    </div>
+                </li>
                 <li><a href="#about" data-hover>About</a></li>
                 <li><a href="#contact" data-hover>Contact</a></li>
             </ul>
@@ -65,13 +102,7 @@
     <div class="mobile-drawer-backdrop" id="mobile-drawer-backdrop"></div>
 
     <main>
-        <!-- Section 1: Hero -->
         <section class="hero-section">
-            <!-- 3D Background Canvas -->
-            <div id="canvas-container" class="canvas-container">
-                <canvas id="hero-canvas"></canvas>
-            </div>
-            
             <div class="content-wrapper text-center hero-content-relative">
                 
                 <div class="hero-eyebrow fade-up">
@@ -79,18 +110,20 @@
                     FTA-Accredited Peppol Service Provider
                 </div>
 
-                <h1 class="fade-up hero-heading" style="transition-delay: 0.1s;">
-                    Stop reading Peppol slides.<br>
-                    <span class="text-gradient">Be ready for January 2027.</span>
-                </h1>
+                <h1 class="hero-heading" id="hero-heading" data-kinetic-text="Stop reading Peppol slides."></h1>
                 
-                <p class="hero-sub fade-up" style="transition-delay: 0.2s;">
+                <!-- Replaced JS animation with a clean CSS fade-in -->
+                <p class="hero-subline fade-up text-gradient" style="transition-delay: 1.6s;">
+                    Be ready for January 2027.
+                </p>
+
+                <p class="hero-sub fade-up" style="transition-delay: 1.8s;">
                     Connect your ERP, validate your data with our AI Gap Analyzer, and clear your first invoice through our UAE Access Point.
                 </p>
                 
-                <div class="interactive-calculator fade-up" style="transition-delay: 0.3s;">
+                <div class="interactive-calculator fade-up" style="transition-delay: 1.9s;">
                     <div class="calc-header">
-                        <i data-lucide="calculator" class="calc-icon"></i>
+                        <span class="calc-icon-badge"><i data-lucide="calculator" class="calc-icon"></i></span>
                         <h3>Calculate Your Mandate Deadline</h3>
                     </div>
                     <div class="calc-inputs">
@@ -111,7 +144,7 @@
                     <div id="calc-result" class="calc-result-box hidden"></div>
                 </div>
                 
-                <div class="hero-trust-row fade-up" style="transition-delay: 0.4s;">
+                <div class="hero-trust-row fade-up" style="transition-delay: 2s;">
                     <div class="trust-pill" data-hover>
                         <i data-lucide="shield-check" class="trust-icon"></i>
                         ISO/IEC 27001 & 22301
@@ -128,7 +161,6 @@
             </div>
         </section>
 
-        <!-- Section 2: Why TCA -->
         <section id="platform" class="why-section">
             <div class="content-wrapper">
                 <div class="section-header text-center fade-up">
@@ -137,7 +169,8 @@
                     <p>The UAE has 20+ ASPs. Most are reskinned global platforms or consultancy-led services. TCA is the only one designed AI-first, around the real bottleneck: getting your business actually ready.</p>
                 </div>
                 
-                <div class="premium-table fade-up">
+                <div class="table-glow-wrap fade-up">
+                    <div class="premium-table">
                     <div class="table-row table-header">
                         <div class="col-dim">Dimension</div>
                         <div class="col-asp">Typical UAE ASP</div>
@@ -145,51 +178,51 @@
                     </div>
 
                     <div class="table-row fade-up">
-                        <div class="col-dim">Mental model</div>
+                        <div class="col-dim"><i data-lucide="brain" class="dim-icon"></i> Mental model</div>
                         <div class="col-asp"><i data-lucide="x" class="icon-x"></i> Sells the destination - Peppol + ASP + UBL.</div>
                         <div class="col-tca"><i data-lucide="check" class="icon-check"></i> Sells the journey - AI agents for every place you get stuck.</div>
                     </div>
 
                     <div class="table-row fade-up">
-                        <div class="col-dim">Pre-compliance work</div>
+                        <div class="col-dim"><i data-lucide="clipboard-check" class="dim-icon"></i> Pre-compliance work</div>
                         <div class="col-asp"><i data-lucide="x" class="icon-x"></i> Out of scope. "Hire a consultant for AED 30K-100K."</div>
                         <div class="col-tca"><i data-lucide="check" class="icon-check"></i> In scope. Free Gap Analyzer + structured remediation tooling.</div>
                     </div>
 
                     <div class="table-row fade-up">
-                        <div class="col-dim">Data residency</div>
+                        <div class="col-dim"><i data-lucide="database" class="dim-icon"></i> Data residency</div>
                         <div class="col-asp"><i data-lucide="x" class="icon-x"></i> Often EU / Singapore / global cloud.</div>
                         <div class="col-tca"><i data-lucide="check" class="icon-check"></i> Hosted in the UAE on AWS - zero data leaves the country.</div>
                     </div>
 
                     <div class="table-row fade-up">
-                        <div class="col-dim">AI capability</div>
+                        <div class="col-dim"><i data-lucide="cpu" class="dim-icon"></i> AI capability</div>
                         <div class="col-asp"><i data-lucide="x" class="icon-x"></i> A few "AI features" bolted onto SaaS.</div>
                         <div class="col-tca"><i data-lucide="check" class="icon-check"></i> Gap Analyzer in customers' hands today.</div>
                     </div>
 
                     <div class="table-row fade-up">
-                        <div class="col-dim">Trust model</div>
+                        <div class="col-dim"><i data-lucide="shield-check" class="dim-icon"></i> Trust model</div>
                         <div class="col-asp"><i data-lucide="x" class="icon-x"></i> Black-box AI. Sign here.</div>
                         <div class="col-tca"><i data-lucide="check" class="icon-check"></i> Compliance-Specialist-in-the-loop - human review.</div>
                     </div>
 
                     <div class="table-row fade-up">
-                        <div class="col-dim">Regional readiness</div>
+                        <div class="col-dim"><i data-lucide="map" class="dim-icon"></i> Regional readiness</div>
                         <div class="col-asp"><i data-lucide="x" class="icon-x"></i> One country, starts from scratch elsewhere.</div>
                         <div class="col-tca"><i data-lucide="check" class="icon-check"></i> UAE today. Oman on the immediate roadmap.</div>
                     </div>
 
                     <div class="table-row fade-up">
-                        <div class="col-dim">Pricing & lock-in</div>
+                        <div class="col-dim"><i data-lucide="tag" class="dim-icon"></i> Pricing & lock-in</div>
                         <div class="col-asp"><i data-lucide="x" class="icon-x"></i> Enterprise contracts, multi-year commitments.</div>
                         <div class="col-tca"><i data-lucide="check" class="icon-check"></i> Transparent SMB-friendly tiers.</div>
+                    </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Section 3: The Mandate Moment -->
         <section class="mandate-section">
             <div class="content-wrapper text-center">
                 <div class="section-header fade-up">
@@ -204,111 +237,72 @@
                         <span class="mandate-blob blob-blue"></span>
                         <span class="mandate-blob blob-mint"></span>
                     </div>
-                    <div class="carousel-stage" id="carousel-stage">
+                    <div class="carousel-viewport" id="carousel-viewport">
+                        <button type="button" class="carousel-arrow carousel-arrow-left" id="carousel-prev" aria-label="Previous stat" data-hover>
+                            <i data-lucide="chevron-left"></i>
+                        </button>
 
-                        <div class="carousel-card accent-cyan" data-index="0">
-                            <div class="card-flip-inner">
-                                <div class="card-face card-front">
+                        <div class="carousel-track" id="carousel-track">
+
+                            <div class="carousel-card accent-cyan">
+                                <div class="card-face">
                                     <div class="stat-card-top">
                                         <span class="stat-icon-badge"><i data-lucide="coins" class="stat-icon"></i></span>
-                                        <i data-lucide="repeat" class="stat-corner-arrow" aria-hidden="true"></i>
                                     </div>
                                     <h4>AED 30K-100K</h4>
                                     <div class="stat-visual" aria-hidden="true"><i data-lucide="coins" class="stat-visual-icon"></i></div>
-                                    <p>Typical consultant project</p>
-                                    <span class="flip-hint">Tap to flip</span>
-                                </div>
-                                <div class="card-face card-back">
-                                    <span class="stat-icon-badge"><i data-lucide="coins" class="stat-icon"></i></span>
-                                    <h4>AED 30K-100K</h4>
-                                    <p>Typical consultant project</p>
-                                    <span class="flip-hint">Tap to flip back</span>
+                                    <h5>Typical consultant project</h5>
+                                    <p>For data-readiness work alone — before you even pick an ASP</p>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="carousel-card accent-blue" data-index="1">
-                            <div class="card-flip-inner">
-                                <div class="card-face card-front">
+                            <div class="carousel-card accent-blue">
+                                <div class="card-face">
                                     <div class="stat-card-top">
                                         <span class="stat-icon-badge"><i data-lucide="file-box" class="stat-icon"></i></span>
-                                        <i data-lucide="repeat" class="stat-corner-arrow" aria-hidden="true"></i>
                                     </div>
                                     <h4>~50</h4>
                                     <div class="stat-visual" aria-hidden="true"><i data-lucide="file-box" class="stat-visual-icon"></i></div>
-                                    <p>Mandatory PINT AE fields</p>
-                                    <span class="flip-hint">Tap to flip</span>
-                                </div>
-                                <div class="card-face card-back">
-                                    <span class="stat-icon-badge"><i data-lucide="file-box" class="stat-icon"></i></span>
-                                    <h4>~50</h4>
-                                    <p>Mandatory PINT AE fields</p>
-                                    <span class="flip-hint">Tap to flip back</span>
+                                    <h5>Mandatory PINT AE fields</h5>
+                                    <p>Out of 135+ data elements. Most ERPs capture < 60% today.</p>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="carousel-card accent-mint" data-index="2">
-                            <div class="card-flip-inner">
-                                <div class="card-face card-front">
+                            <div class="carousel-card accent-mint">
+                                <div class="card-face">
                                     <div class="stat-card-top">
                                         <span class="stat-icon-badge"><i data-lucide="radar" class="stat-icon"></i></span>
-                                        <i data-lucide="repeat" class="stat-corner-arrow" aria-hidden="true"></i>
                                     </div>
-                                    <h4>8</h4>
+                                    <h4>8 Domains</h4>
                                     <div class="stat-visual" aria-hidden="true"><i data-lucide="radar" class="stat-visual-icon"></i></div>
-                                    <p>domains Data quality areas to score</p>
-                                    <span class="flip-hint">Tap to flip</span>
-                                </div>
-                                <div class="card-face card-back">
-                                    <span class="stat-icon-badge"><i data-lucide="radar" class="stat-icon"></i></span>
-                                    <h4>8</h4>
-                                    <p>domains Data quality areas to score</p>
-                                    <span class="flip-hint">Tap to flip back</span>
+                                    <h5>Data quality areas to score</h5>
+                                    <p>Parties, items, addresses, tax, codes — what TCA's Gap Analyzer scores</p>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="carousel-card accent-yellow" data-index="3">
-                            <div class="card-flip-inner">
-                                <div class="card-face card-front">
+                            <div class="carousel-card accent-yellow">
+                                <div class="card-face">
                                     <div class="stat-card-top">
                                         <span class="stat-icon-badge"><i data-lucide="clock" class="stat-icon"></i></span>
-                                        <i data-lucide="repeat" class="stat-corner-arrow" aria-hidden="true"></i>
                                     </div>
                                     <h4>14 days</h4>
                                     <div class="stat-visual" aria-hidden="true"><i data-lucide="clock" class="stat-visual-icon"></i></div>
-                                    <p>Window to issue every invoice</p>
-                                    <span class="flip-hint">Tap to flip</span>
-                                </div>
-                                <div class="card-face card-back">
-                                    <span class="stat-icon-badge"><i data-lucide="clock" class="stat-icon"></i></span>
-                                    <h4>14 days</h4>
-                                    <p>Window to issue every invoice</p>
-                                    <span class="flip-hint">Tap to flip back</span>
+                                    <h5>Window to issue every invoice</h5>
+                                    <p>From the taxable event. No exceptions. Real-time TDD reporting on every one.</p>
                                 </div>
                             </div>
+
                         </div>
 
+                        <button type="button" class="carousel-arrow carousel-arrow-right" id="carousel-next" aria-label="Next stat" data-hover>
+                            <i data-lucide="chevron-right"></i>
+                        </button>
                     </div>
-
-                    <div class="carousel-nav">
-                        <div class="carousel-dots-glass" id="carousel-dots-glass">
-                            <div class="carousel-dots" id="carousel-dots">
-                                <button class="carousel-dot active" data-goto="0" aria-label="Card 1" data-hover></button>
-                                <button class="carousel-dot" data-goto="1" aria-label="Card 2" data-hover></button>
-                                <button class="carousel-dot" data-goto="2" aria-label="Card 3" data-hover></button>
-                                <button class="carousel-dot" data-goto="3" aria-label="Card 4" data-hover></button>
-                                <span class="carousel-dot-blob" id="carousel-dot-blob" aria-hidden="true"></span>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="carousel-dots" id="carousel-dots" role="tablist" aria-label="Mandate stat slides"></div>
                 </div>
-                <p class="mandate-hint fade-up"><i data-lucide="mouse-pointer-2"></i> Click the centre card to flip it — click a peeking card to bring it forward</p>
             </div>
         </section>
 
-        <!-- Section 4: Timeline -->
         <section class="timeline-section">
             <div class="content-wrapper">
                 <div class="timeline-header fade-up">
@@ -317,40 +311,74 @@
                     <p class="centered-sub" style="text-align: left; margin: 0; max-width: 900px;">The rollout — set by Ministerial Decision 244/2025 and Cabinet Decision 106/2025 — opens with voluntary onboarding in <span class="brand-cyan-text font-bold">July 2026</span>, becomes mandatory for large taxpayers in <span class="brand-cyan-text font-bold">January 2027</span>, and reaches the rest of the economy by July 2027.</p>
                 </div>
 
-                <div class="timeline-container" id="timeline-container">
-                    <div class="timeline-line"><div class="timeline-line-fill" id="timeline-fill"></div></div>
-                    <div class="timeline-grid">
-                        <div class="timeline-card fade-up card-cyan interactive-card">
-                            <div class="timeline-dot dot-cyan"></div>
-                            <div class="phase-label text-cyan">VOLUNTARY</div>
-                            <h3>1 July 2026</h3>
+                <div class="vtimeline" id="vtimeline">
+                    <div class="vtimeline-line" aria-hidden="true"><div class="vtimeline-line-fill" id="vtimeline-fill"></div></div>
+
+                    <div class="vtimeline-item vtimeline-left card-cyan" data-index="0">
+                        <div class="vtimeline-node"><i data-lucide="play-circle"></i></div>
+                        <div class="vtimeline-card interactive-card" data-hover>
+                            <div class="vtimeline-card-top">
+                                <span class="phase-label text-cyan">VOLUNTARY</span>
+                                <span class="vtimeline-date">1 July 2026</span>
+                            </div>
                             <h4>Voluntary go-live opens</h4>
                             <span class="sub-badge bg-cyan">Any UAE business</span>
-                            <p class="mt-4 text-sm">Onboard early without penalty. Start issuing structured invoices through your accredited ASP.</p>
+                            <p class="vtimeline-summary">Onboard early without penalty, on your own schedule.</p>
+                            <button class="vtimeline-toggle" data-hover aria-expanded="false">Details <i data-lucide="chevron-down" class="chevron"></i></button>
+                            <div class="vtimeline-detail">
+                                <p>Start issuing structured invoices through your accredited ASP. Early movers get priority onboarding support and time to validate ERP data before the compliance rush.</p>
+                            </div>
                         </div>
-                        <div class="timeline-card fade-up card-green interactive-card">
-                            <div class="timeline-dot dot-green"></div>
-                            <div class="phase-label text-green">PHASE 1</div>
-                            <h3>1 January 2027</h3>
+                    </div>
+
+                    <div class="vtimeline-item vtimeline-right card-green" data-index="1">
+                        <div class="vtimeline-node"><i data-lucide="building-2"></i></div>
+                        <div class="vtimeline-card interactive-card" data-hover>
+                            <div class="vtimeline-card-top">
+                                <span class="phase-label text-green">PHASE 1</span>
+                                <span class="vtimeline-date">1 January 2027</span>
+                            </div>
                             <h4>Large taxpayers — mandatory</h4>
                             <span class="sub-badge bg-green">Annual revenue ≥ AED 50M</span>
-                            <p class="mt-4 text-sm">ASP must be appointed by 31 July 2026. Every invoice reported through DCTCE within 14 days.</p>
+                            <p class="vtimeline-summary">Clearance becomes mandatory for the largest taxpayers.</p>
+                            <button class="vtimeline-toggle" data-hover aria-expanded="false">Details <i data-lucide="chevron-down" class="chevron"></i></button>
+                            <div class="vtimeline-detail">
+                                <p>ASP must be appointed by 31 July 2026. Every invoice reported through DCTCE within 14 days of issuance.</p>
+                            </div>
                         </div>
-                        <div class="timeline-card fade-up card-blue interactive-card">
-                            <div class="timeline-dot dot-blue"></div>
-                            <div class="phase-label text-blue">PHASE 2</div>
-                            <h3>1 July 2027</h3>
+                    </div>
+
+                    <div class="vtimeline-item vtimeline-left card-blue" data-index="2">
+                        <div class="vtimeline-node"><i data-lucide="users"></i></div>
+                        <div class="vtimeline-card interactive-card" data-hover>
+                            <div class="vtimeline-card-top">
+                                <span class="phase-label text-blue">PHASE 2</span>
+                                <span class="vtimeline-date">1 July 2027</span>
+                            </div>
                             <h4>All other VAT-registered</h4>
                             <span class="sub-badge bg-blue">Revenue < AED 50M</span>
-                            <p class="mt-4 text-sm">ASP must be appointed by 31 March 2027. ~82% of UAE businesses fall in this band.</p>
+                            <p class="vtimeline-summary">The mandate reaches the majority of UAE businesses.</p>
+                            <button class="vtimeline-toggle" data-hover aria-expanded="false">Details <i data-lucide="chevron-down" class="chevron"></i></button>
+                            <div class="vtimeline-detail">
+                                <p>ASP must be appointed by 31 March 2027. Roughly 82% of UAE businesses fall in this band.</p>
+                            </div>
                         </div>
-                        <div class="timeline-card fade-up card-yellow interactive-card">
-                            <div class="timeline-dot dot-yellow"></div>
-                            <div class="phase-label text-yellow">PHASE 3</div>
-                            <h3>1 October 2027</h3>
+                    </div>
+
+                    <div class="vtimeline-item vtimeline-right card-yellow" data-index="3">
+                        <div class="vtimeline-node"><i data-lucide="landmark"></i></div>
+                        <div class="vtimeline-card interactive-card" data-hover>
+                            <div class="vtimeline-card-top">
+                                <span class="phase-label text-yellow">PHASE 3</span>
+                                <span class="vtimeline-date">1 October 2027</span>
+                            </div>
                             <h4>Government entities (B2G)</h4>
                             <span class="sub-badge bg-yellow">UAE government bodies</span>
-                            <p class="mt-4 text-sm">B2G in scope. ASP must be appointed by 31 March 2027. B2C remains out of scope.</p>
+                            <p class="vtimeline-summary">B2G invoicing comes into scope; B2C stays exempt.</p>
+                            <button class="vtimeline-toggle" data-hover aria-expanded="false">Details <i data-lucide="chevron-down" class="chevron"></i></button>
+                            <div class="vtimeline-detail">
+                                <p>ASP must be appointed by 31 March 2027. B2C transactions remain out of scope for the foreseeable future.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -369,7 +397,6 @@
             </div>
         </section>
 
-        <!-- Section 5: Interactive Peek Dashboard -->
         <section class="dashboard-section">
             <div class="content-wrapper">
                 <div class="section-header text-center fade-up">
@@ -379,39 +406,30 @@
                 </div>
                 
                 <div class="peek-dashboard fade-up">
-                    <div class="peek-sidebar">
-                        <div class="peek-trigger active" data-target="peek-compliance">
-                            <div>
-                                <h4>Compliance & accreditation</h4>
-                                <span class="score-badge">4/4 met</span>
-                            </div>
-                            <i data-lucide="check-circle-2" class="trigger-icon"></i>
-                        </div>
-                        <div class="peek-trigger" data-target="peek-security">
-                            <div>
-                                <h4>Security & data sovereignty</h4>
-                                <span class="score-badge">4/4 met</span>
-                            </div>
-                            <i data-lucide="shield" class="trigger-icon"></i>
-                        </div>
-                        <div class="peek-trigger" data-target="peek-platform">
-                            <div>
-                                <h4>Platform & reliability</h4>
-                                <span class="score-badge">4/4 met</span>
-                            </div>
-                            <i data-lucide="server" class="trigger-icon"></i>
-                        </div>
-                        <div class="peek-trigger" data-target="peek-commercial">
-                            <div>
-                                <h4>Commercial, support & exit</h4>
-                                <span class="score-badge">4/4 met</span>
-                            </div>
-                            <i data-lucide="briefcase" class="trigger-icon"></i>
-                        </div>
+                    <div class="peek-pills" role="tablist">
+                        <button type="button" class="peek-pill active" data-target="peek-compliance" data-hover>
+                            <i data-lucide="check-circle-2" class="pill-icon"></i>
+                            <span class="pill-label">Compliance & accreditation</span>
+                            <span class="score-badge">4/4 met</span>
+                        </button>
+                        <button type="button" class="peek-pill" data-target="peek-security" data-hover>
+                            <i data-lucide="shield" class="pill-icon"></i>
+                            <span class="pill-label">Security & data sovereignty</span>
+                            <span class="score-badge">4/4 met</span>
+                        </button>
+                        <button type="button" class="peek-pill" data-target="peek-platform" data-hover>
+                            <i data-lucide="server" class="pill-icon"></i>
+                            <span class="pill-label">Platform & reliability</span>
+                            <span class="score-badge">4/4 met</span>
+                        </button>
+                        <button type="button" class="peek-pill" data-target="peek-commercial" data-hover>
+                            <i data-lucide="briefcase" class="pill-icon"></i>
+                            <span class="pill-label">Commercial, support & exit</span>
+                            <span class="score-badge">4/4 met</span>
+                        </button>
                     </div>
 
                     <div class="peek-display">
-                        <!-- Compliance Window -->
                         <div class="peek-content active" id="peek-compliance">
                             <div class="peek-grid">
                                 <div class="peek-card interactive-card">
@@ -462,7 +480,6 @@
                             </div>
                         </div>
 
-                        <!-- Security Window -->
                         <div class="peek-content" id="peek-security">
                             <div class="peek-grid">
                                 <div class="peek-card interactive-card">
@@ -514,7 +531,6 @@
                             </div>
                         </div>
 
-                        <!-- Platform Window -->
                         <div class="peek-content" id="peek-platform">
                             <div class="peek-grid">
                                 <div class="peek-card interactive-card">
@@ -564,7 +580,6 @@
                             </div>
                         </div>
 
-                        <!-- Commercial Window -->
                         <div class="peek-content" id="peek-commercial">
                             <div class="peek-grid">
                                 <div class="peek-card interactive-card">
@@ -626,7 +641,6 @@
             </div>
         </section>
 
-        <!-- Section 6: GCC Ready & Logos -->
         <section class="gcc-section">
             <div class="content-wrapper">
                 <div class="section-header text-center fade-up">
@@ -659,39 +673,122 @@
                 </div>
 
                 <div class="trusted-section fade-up" style="margin-top: 80px;">
-                    <div class="trust-arc-stage" id="trust-arc-stage">
-                        <div class="trust-arc-glow" aria-hidden="true"></div>
-                        <div class="trust-arc" id="trust-arc">
-                            <div class="arc-logo" style="--angle: -72deg;"><img src="assets/logos/mashreq.png" alt="Mashreq" onerror="this.outerHTML='<span class=\'fallback-logo\'>Mashreq</span>'"></div>
-                            <div class="arc-logo" style="--angle: -43deg;"><img src="assets/logos/dof.png" alt="Department of Finance" onerror="this.outerHTML='<span class=\'fallback-logo\'>Department of Finance</span>'"></div>
-                            <div class="arc-logo" style="--angle: -15deg;"><img src="assets/logos/emirates.png" alt="Emirates Dnata" onerror="this.outerHTML='<span class=\'fallback-logo\'>Emirates Dnata</span>'"></div>
-                            <div class="arc-logo" style="--angle: 15deg;"><img src="assets/logos/sadafco.png" alt="Sadafco" onerror="this.outerHTML='<span class=\'fallback-logo\'>Sadafco</span>'"></div>
-                            <div class="arc-logo" style="--angle: 43deg;"><img src="assets/logos/reliance.png" alt="Reliance" onerror="this.outerHTML='<span class=\'fallback-logo\'>Reliance</span>'"></div>
-                            <div class="arc-logo" style="--angle: 72deg;"><img src="assets/logos/alshirawi.png" alt="Al Shirawi" onerror="this.outerHTML='<span class=\'fallback-logo\'>Al Shirawi</span>'"></div>
-                        </div>
-
-                        <div class="grand-header-container text-center">
-                            <h2 class="bold-statement text-glow-brand">TRUSTED ACROSS THE UAE 15+ YEARS</h2>
-                            <p class="centered-sub">
-                                <span class="brand-cyan-text trusted-count" id="client-counter" data-target="1500">0+</span> clients of the Suntech group. Across financial institutions, public sector, and private enterprise.
-                            </p>
-                        </div>
+                    <div class="grand-header-container text-center">
+                        <h2 class="bold-statement text-glow-brand">TRUSTED ACROSS THE UAE 15+ YEARS</h2>
+                        <p class="centered-sub">
+                            <span class="brand-cyan-text trusted-count" id="client-counter" data-target="1500">0+</span><br>
+                            clients of the Suntech group. Across financial institutions, public sector, and private enterprise.
+                        </p>
                     </div>
 
-                    <!-- Mobile fallback: simple logo grid, arc collapses on small screens -->
-                    <div class="trust-logo-grid" aria-hidden="true">
-                        <div class="logo-item"><img src="assets/logos/mashreq.png" alt="Mashreq" onerror="this.outerHTML='<span class=\'fallback-logo\'>Mashreq</span>'"></div>
-                        <div class="logo-item"><img src="assets/logos/dof.png" alt="Department of Finance" onerror="this.outerHTML='<span class=\'fallback-logo\'>Department of Finance</span>'"></div>
-                        <div class="logo-item"><img src="assets/logos/emirates.png" alt="Emirates Dnata" onerror="this.outerHTML='<span class=\'fallback-logo\'>Emirates Dnata</span>'"></div>
-                        <div class="logo-item"><img src="assets/logos/sadafco.png" alt="Sadafco" onerror="this.outerHTML='<span class=\'fallback-logo\'>Sadafco</span>'"></div>
-                        <div class="logo-item"><img src="assets/logos/reliance.png" alt="Reliance" onerror="this.outerHTML='<span class=\'fallback-logo\'>Reliance</span>'"></div>
-                        <div class="logo-item"><img src="assets/logos/alshirawi.png" alt="Al Shirawi" onerror="this.outerHTML='<span class=\'fallback-logo\'>Al Shirawi</span>'"></div>
+                    <div class="marquee-stack">
+                        <div class="marquee-row" aria-hidden="false">
+                            <div class="marquee-track track-left">
+                                <div class="logo-item"><span class="fallback-logo">Mashreq</span></div>
+                                <div class="logo-item"><span class="fallback-logo">Prospera Credit Union</span></div>
+                                <div class="logo-item"><span class="fallback-logo">Faber Capital</span></div>
+                                <div class="logo-item"><span class="fallback-logo">Finance House</span></div>
+                                <div class="logo-item"><span class="fallback-logo">LIC</span></div>
+                                <div class="logo-item"><span class="fallback-logo">SBI</span></div>
+                                <div class="logo-item"><span class="fallback-logo">Canara Bank</span></div>
+                                <div class="logo-item"><span class="fallback-logo">Axis Bank</span></div>
+                                <div class="logo-item"><span class="fallback-logo">Emirates dnata</span></div>
+                                <div class="logo-item"><span class="fallback-logo">Phoenix Hospital</span></div>
+                                <div class="logo-item"><span class="fallback-logo">Mother Dairy</span></div>
+                                <div class="logo-item"><span class="fallback-logo">MHRD</span></div>
+                                <div class="logo-item" aria-hidden="true"><span class="fallback-logo">Mashreq</span></div>
+                                <div class="logo-item" aria-hidden="true"><span class="fallback-logo">Prospera Credit Union</span></div>
+                                <div class="logo-item" aria-hidden="true"><span class="fallback-logo">Faber Capital</span></div>
+                                <div class="logo-item" aria-hidden="true"><span class="fallback-logo">Finance House</span></div>
+                                <div class="logo-item" aria-hidden="true"><span class="fallback-logo">LIC</span></div>
+                                <div class="logo-item" aria-hidden="true"><span class="fallback-logo">SBI</span></div>
+                                <div class="logo-item" aria-hidden="true"><span class="fallback-logo">Canara Bank</span></div>
+                                <div class="logo-item" aria-hidden="true"><span class="fallback-logo">Axis Bank</span></div>
+                                <div class="logo-item" aria-hidden="true"><span class="fallback-logo">Emirates dnata</span></div>
+                                <div class="logo-item" aria-hidden="true"><span class="fallback-logo">Phoenix Hospital</span></div>
+                                <div class="logo-item" aria-hidden="true"><span class="fallback-logo">Mother Dairy</span></div>
+                                <div class="logo-item" aria-hidden="true"><span class="fallback-logo">MHRD</span></div>
+                            </div>
+                        </div>
+                        <div class="marquee-row" aria-hidden="false">
+                            <div class="marquee-track track-right">
+                                <div class="logo-item"><span class="fallback-logo">Sadafco</span></div>
+                                <div class="logo-item"><span class="fallback-logo">Al Shirawi</span></div>
+                                <div class="logo-item"><span class="fallback-logo">Clara</span></div>
+                                <div class="logo-item"><span class="fallback-logo">Danway</span></div>
+                                <div class="logo-item"><span class="fallback-logo">BLS</span></div>
+                                <div class="logo-item"><span class="fallback-logo">Kerten Hospitality</span></div>
+                                <div class="logo-item"><span class="fallback-logo">EER</span></div>
+                                <div class="logo-item"><span class="fallback-logo">Fakhruddin</span></div>
+                                <div class="logo-item"><span class="fallback-logo">Vedanta</span></div>
+                                <div class="logo-item"><span class="fallback-logo">Sterling</span></div>
+                                <div class="logo-item"><span class="fallback-logo">Hindware</span></div>
+                                <div class="logo-item"><span class="fallback-logo">Reliance</span></div>
+                                <div class="logo-item"><span class="fallback-logo">NBTC</span></div>
+                                <div class="logo-item"><span class="fallback-logo">DLFA</span></div>
+                                <div class="logo-item" aria-hidden="true"><span class="fallback-logo">Sadafco</span></div>
+                                <div class="logo-item" aria-hidden="true"><span class="fallback-logo">Al Shirawi</span></div>
+                                <div class="logo-item" aria-hidden="true"><span class="fallback-logo">Clara</span></div>
+                                <div class="logo-item" aria-hidden="true"><span class="fallback-logo">Danway</span></div>
+                                <div class="logo-item" aria-hidden="true"><span class="fallback-logo">BLS</span></div>
+                                <div class="logo-item" aria-hidden="true"><span class="fallback-logo">Kerten Hospitality</span></div>
+                                <div class="logo-item" aria-hidden="true"><span class="fallback-logo">EER</span></div>
+                                <div class="logo-item" aria-hidden="true"><span class="fallback-logo">Fakhruddin</span></div>
+                                <div class="logo-item" aria-hidden="true"><span class="fallback-logo">Vedanta</span></div>
+                                <div class="logo-item" aria-hidden="true"><span class="fallback-logo">Sterling</span></div>
+                                <div class="logo-item" aria-hidden="true"><span class="fallback-logo">Hindware</span></div>
+                                <div class="logo-item" aria-hidden="true"><span class="fallback-logo">Reliance</span></div>
+                                <div class="logo-item" aria-hidden="true"><span class="fallback-logo">NBTC</span></div>
+                                <div class="logo-item" aria-hidden="true"><span class="fallback-logo">DLFA</span></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Section 7: FAQ -->
+        <section class="mandate-cta-section">
+            <div class="content-wrapper">
+                <div class="mandate-cta-card fade-up reveal-scale">
+                    <span class="timeline-badge"><span class="live-dot" style="display:inline-block; margin-right:6px;"></span>Onboarding now for the Jan 2027 mandate</span>
+                    <h2 class="bold-statement" style="margin-top:18px;">The mandate is coming.<br><span class="text-gradient">Start with a free Gap Report.</span></h2>
+                    <p class="centered-sub">Run a free Gap Report on your data in under 10 minutes — or book a 30-minute readiness review with the team that built the platform.</p>
+                    <div class="mandate-cta-actions">
+                        <button class="btn-primary" data-hover>
+                            <span>Run a free gap report</span>
+                            <i data-lucide="arrow-right" class="btn-icon"></i>
+                        </button>
+                        <button class="btn-secondary" data-hover>
+                            <i data-lucide="calendar" class="btn-icon-left"></i>
+                            <span>Book a readiness review</span>
+                        </button>
+                    </div>
+                    <p class="mandate-cta-microtrust">
+                        <i data-lucide="check" class="icon-inline"></i> No credit card required
+                        <span class="dot-sep">·</span> Free Gap Report
+                        <span class="dot-sep">·</span> Your data stays in the UAE
+                    </p>
+                </div>
+
+                <div class="deadline-bar fade-up interactive-card">
+                    <div class="deadline-bar-text">
+                        <span class="deadline-eyebrow text-yellow"><i data-lucide="alarm-clock"></i> Don't miss your compliance deadline</span>
+                        <h4>ASP appointment deadline for Phase 1 is <span class="brand-cyan-text" style="font-size:inherit; text-transform:none; letter-spacing:0;">30 October 2026</span>.</h4>
+                        <p>Mandatory go-live on 1 January 2027 for businesses with revenue ≥ AED 50M.</p>
+                    </div>
+                    <div class="deadline-bar-actions">
+                        <button class="btn-primary btn-compact" data-hover>
+                            <span>Run a free gap report</span>
+                            <i data-lucide="arrow-right" class="btn-icon"></i>
+                        </button>
+                        <button class="btn-secondary btn-compact" data-hover>
+                            <span>Book a readiness review</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section class="faq-section">
             <div class="content-wrapper text-center">
                 <div class="section-header fade-up">
@@ -742,7 +839,6 @@
         </section>
     </main>
 
-    <!-- Mega Footer -->
     <footer class="mega-footer">
         <div class="content-wrapper">
             <div class="footer-grid">
@@ -753,13 +849,19 @@
                     <p class="footer-desc">The AI-native UAE e-invoicing business line of <span class="brand-cyan-text" style="font-size:inherit;">Suntech Business Solutions</span>. FTA-Accredited Service Provider.</p>
                     
                     <div class="social-icons">
-                        <a href="#" class="icon-box" data-hover><i data-lucide="linkedin"></i></a>
-                        <a href="#" class="icon-box" data-hover><i data-lucide="mail"></i></a>
+                        <a href="#" class="icon-box" data-hover aria-label="LinkedIn">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-style-icon">
+                                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4V8h4v1.5A6 6 0 0 1 16 8z"></path>
+                                <rect x="2" y="9" width="4" height="12"></rect>
+                                <circle cx="4" cy="4" r="2"></circle>
+                            </svg>
+                        </a>
+                        <a href="#" class="icon-box" data-hover aria-label="Email"><i data-lucide="mail"></i></a>
                     </div>
                     <ul class="contact-list">
                         <li><i data-lucide="map-pin"></i> Deira — Dubai, UAE</li>
                         <li><i data-lucide="mail"></i> einvoicing@suntech-global.com</li>
-                        <li><i data-lucide="phone"></i> +971 52 569 5428</li>
+                        <li><i data-lucide="phone"></i> +971 xx xxx xxxx</li>
                     </ul>
                 </div>
 
@@ -838,8 +940,8 @@
         </div>
     </footer>
 
-    <!-- Scripts -->
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="silk.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
