@@ -1,13 +1,11 @@
-// Initialize Lucide Icons
 lucide.createIcons();
 
 document.addEventListener('DOMContentLoaded', () => {
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // --- Custom Cursor Logic ---
     const cursor = document.getElementById('custom-cursor');
-    const interactiveElements = document.querySelectorAll('a, button, [data-hover], select, .interactive-card, .peek-trigger, .faq-card-header, .icon-box');
+    const interactiveElements = document.querySelectorAll('a, button, [data-hover], select, .interactive-card, .peek-pill, .faq-card-header, .icon-box');
 
     if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
         document.addEventListener('mousemove', (e) => {
@@ -30,7 +28,6 @@ document.addEventListener('DOMContentLoaded', () => {
         cursor.style.display = 'none';
     }
 
-    // --- Theme Toggle ---
     const themeBtn = document.getElementById('theme-toggle');
     const htmlElement = document.documentElement;
 
@@ -44,7 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('tca-theme', newTheme);
     });
 
-    // --- Glass Nav Scroll Effect ---
     const nav = document.querySelector('.glass-nav');
     window.addEventListener('scroll', () => {
         if (window.scrollY > 50) {
@@ -54,10 +50,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }, { passive: true });
 
-    // --- Sliding Nav Indicator ---
     const navList = document.getElementById('nav-list');
     const navIndicator = document.getElementById('nav-indicator');
-    const navLinks = navList ? navList.querySelectorAll('a') : [];
+    const navLinks = navList ? navList.querySelectorAll(':scope > li > a') : [];
 
     function moveIndicatorTo(link) {
         if (!navIndicator || !link) return;
@@ -88,7 +83,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- Mobile Drawer ---
     const menuBtn = document.getElementById('mobile-menu-btn');
     const drawer = document.getElementById('mobile-drawer');
     const backdrop = document.getElementById('mobile-drawer-backdrop');
@@ -112,8 +106,11 @@ document.addEventListener('DOMContentLoaded', () => {
             menuBtn.classList.contains('open') ? closeDrawer() : openDrawer();
         });
         backdrop.addEventListener('click', closeDrawer);
-        drawer.querySelectorAll('a, button').forEach(el => el.addEventListener('click', closeDrawer));
-        const drawerLinks = drawer.querySelectorAll('.mobile-drawer-nav a');
+        drawer.querySelectorAll('a, button').forEach(el => {
+            if (el.classList.contains('mobile-dropdown-trigger')) return; 
+            el.addEventListener('click', closeDrawer);
+        });
+        const drawerLinks = drawer.querySelectorAll('.mobile-drawer-nav > ul > li > a');
         drawerLinks.forEach(link => {
             link.addEventListener('click', () => {
                 drawerLinks.forEach(l => l.classList.remove('active-link'));
@@ -128,7 +125,37 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('resize', () => { if (window.innerWidth > 860) closeDrawer(); });
     }
 
-    // --- Intersection Observer for Fade-Up Reveal (mixed stagger) ---
+    const productsItem = document.getElementById('nav-products-item');
+    if (productsItem) {
+        const trigger = productsItem.querySelector('.nav-dropdown-trigger');
+        const isTouch = !window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+        if (trigger) {
+            trigger.addEventListener('click', (e) => {
+                if (!isTouch) return; 
+                e.preventDefault();
+                const nowOpen = productsItem.classList.toggle('open');
+                trigger.setAttribute('aria-expanded', nowOpen ? 'true' : 'false');
+            });
+        }
+        document.addEventListener('click', (e) => {
+            if (!productsItem.contains(e.target)) {
+                productsItem.classList.remove('open');
+                if (trigger) trigger.setAttribute('aria-expanded', 'false');
+            }
+        });
+    }
+
+    const mobileProductsItem = document.getElementById('mobile-products-item');
+    if (mobileProductsItem) {
+        const trigger = mobileProductsItem.querySelector('.mobile-dropdown-trigger');
+        if (trigger) {
+            trigger.addEventListener('click', () => {
+                const nowOpen = mobileProductsItem.classList.toggle('open');
+                trigger.setAttribute('aria-expanded', nowOpen ? 'true' : 'false');
+            });
+        }
+    }
+
     const fadeElements = document.querySelectorAll('.fade-up');
     const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
 
@@ -143,21 +170,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
     fadeElements.forEach(el => observer.observe(el));
 
-    // --- Interactive Peek Dashboard ---
-    const triggers = document.querySelectorAll('.peek-trigger');
+    const pills = document.querySelectorAll('.peek-pill');
     const contents = document.querySelectorAll('.peek-content');
+    const peekPillsRow = document.querySelector('.peek-pills');
 
-    triggers.forEach(trigger => {
-        trigger.addEventListener('click', () => {
-            triggers.forEach(t => t.classList.remove('active'));
-            contents.forEach(c => c.classList.remove('active'));
-            trigger.classList.add('active');
-            const targetId = trigger.getAttribute('data-target');
-            document.getElementById(targetId).classList.add('active');
-        });
+    function activatePill(pill) {
+        if (pill.classList.contains('active')) return;
+        pills.forEach(p => p.classList.remove('active'));
+        contents.forEach(c => c.classList.remove('active'));
+
+        pill.classList.add('active');
+        const targetId = pill.getAttribute('data-target');
+        const target = document.getElementById(targetId);
+        if (target) target.classList.add('active');
+    }
+
+    pills.forEach(pill => {
+        pill.addEventListener('mouseenter', () => activatePill(pill));
+        pill.addEventListener('focus', () => activatePill(pill));
+        pill.addEventListener('click', () => activatePill(pill));
     });
 
-    // --- Simple Calculator Logic ---
+    if (peekPillsRow) {
+        const updatePillsOverflow = () => {
+            const hasMore = peekPillsRow.scrollWidth - peekPillsRow.scrollLeft - peekPillsRow.clientWidth > 24;
+            peekPillsRow.classList.toggle('has-overflow', hasMore);
+        };
+        updatePillsOverflow();
+        peekPillsRow.addEventListener('scroll', updatePillsOverflow, { passive: true });
+        window.addEventListener('resize', updatePillsOverflow);
+    }
+
     const calcBtn = document.getElementById('calc-btn');
     const select = document.getElementById('revenue-select');
     const resultBox = document.getElementById('calc-result');
@@ -179,196 +222,165 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             lucide.createIcons();
-
             resultBox.style.transition = 'opacity 0.5s ease';
             resultBox.style.opacity = 1;
         }, 100);
     });
 
-    // --- Partners Arc: compute dome positions + trigger fan-in reveal ---
-    const arcLogos = document.querySelectorAll('.arc-logo');
-    if (arcLogos.length) {
-        const R = 300;       // arc radius (px)
-        const FLATTEN = 0.62; // dome flatten factor
-        arcLogos.forEach(el => {
-            const angleDeg = parseFloat(el.style.getPropertyValue('--angle')) || 0;
-            const rad = angleDeg * (Math.PI / 180);
-            const tx = Math.sin(rad) * R;
-            const ty = -Math.cos(rad) * R * FLATTEN;
-            const rot = angleDeg * 0.4;
-            el.style.setProperty('--tx', tx.toFixed(1) + 'px');
-            el.style.setProperty('--ty', ty.toFixed(1) + 'px');
-            el.style.setProperty('--rot', rot.toFixed(1) + 'deg');
-        });
+    const carouselTrack = document.getElementById('carousel-track');
+    const carouselViewport = document.getElementById('carousel-viewport');
+    if (carouselTrack && carouselViewport) {
+        const cards = Array.from(carouselTrack.querySelectorAll('.carousel-card'));
+        const total = cards.length;
+        const carouselReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const dotsWrap = document.getElementById('carousel-dots');
+        const prevBtn = document.getElementById('carousel-prev');
+        const nextBtn = document.getElementById('carousel-next');
 
-        const arcEl = document.getElementById('trust-arc');
-        if (arcEl) {
-            const arcObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        arcEl.classList.add('arc-revealed');
-                        arcObserver.disconnect();
-                    }
-                });
-            }, { threshold: 0.3 });
-            arcObserver.observe(arcEl);
-        }
-    }
+        let current = 0;
+        const isNarrow = () => window.innerWidth <= 640;
 
-    // --- Mandate Moment: Curved Peek Carousel with Seamless Infinite Loop ---
-    const carouselStage = document.getElementById('carousel-stage');
-    if (carouselStage) {
-        const originals = Array.from(carouselStage.querySelectorAll('.carousel-card'));
-        const realCount = originals.length;
-        const BUFFER = 2;
-
-        // Build seamless-loop buffer: clone last 2 cards to the front, first 2 to the back.
-        const makeClone = (el) => {
-            const clone = el.cloneNode(true);
-            clone.classList.add('is-clone');
-            clone.setAttribute('aria-hidden', 'true');
-            clone.setAttribute('tabindex', '-1');
-            return clone;
-        };
-        const beforeClones = originals.slice(realCount - BUFFER).map(makeClone);
-        const afterClones = originals.slice(0, BUFFER).map(makeClone);
-        beforeClones.reverse().forEach(clone => carouselStage.insertBefore(clone, carouselStage.firstChild));
-        afterClones.forEach(clone => carouselStage.appendChild(clone));
-
-        const cards = Array.from(carouselStage.querySelectorAll('.carousel-card'));
-        const dots = Array.from(document.querySelectorAll('.carousel-dot'));
-        const dotsRow = document.getElementById('carousel-dots');
-        const dotBlob = document.getElementById('carousel-dot-blob');
-        const dotsGlass = document.getElementById('carousel-dots-glass');
-        let activeIndex = BUFFER; // starts on the first real card
-        const realIndexOf = (i) => ((i - BUFFER) % realCount + realCount) % realCount;
-
-        function spacing() {
-            const w = window.innerWidth;
-            if (w < 640) return { tx: 100, rot: 20, scaleStep: 0.16, curve: 9 };
-            if (w < 1024) return { tx: 140, rot: 24, scaleStep: 0.17, curve: 11 };
-            return { tx: 168, rot: 28, scaleStep: 0.18, curve: 13 };
+        function relPos(i) {
+            let d = i - current;
+            const half = total / 2;
+            if (d > half) d -= total;
+            if (d < -half) d += total;
+            return d;
         }
 
-        function moveDotBlob() {
-            if (!dotBlob || !dots.length) return;
-            const target = dots[realIndexOf(activeIndex)];
-            if (!target) return;
-            const rowRect = dotsRow.getBoundingClientRect();
-            const dotRect = target.getBoundingClientRect();
-            dotBlob.style.width = dotRect.width + 'px';
-            dotBlob.style.borderRadius = '5px';
-            dotBlob.style.transform = `translate(${dotRect.left - rowRect.left}px, -50%)`;
-        }
-
-        function render() {
-            const { tx, rot, scaleStep, curve } = spacing();
+        function paint() {
+            const gap = isNarrow() ? 210 : 300;
             cards.forEach((card, i) => {
-                const offset = i - activeIndex;
-                const abs = Math.abs(offset);
-                // Curved arc: cards dip down the further they sit from the centre
-                const translateX = offset * tx;
-                const translateY = abs * abs * curve;
-                const rotateY = Math.max(-rot * 2, Math.min(rot * 2, offset * -rot));
-                const scale = Math.max(1 - abs * scaleStep, 0.5);
-                const opacity = Math.max(1 - abs * 0.34, 0);
-                const z = 20 - abs;
+                const d = relPos(i);
+                const absD = Math.abs(d);
+                const x = d * gap;
+                let scale, opacity, blur, z;
+                if (absD === 0) { scale = 1; opacity = 1; blur = 0; z = 5; }
+                else if (absD === 1) { scale = 0.82; opacity = 0.5; blur = 2.5; z = 3; }
+                else { scale = 0.68; opacity = 0; blur = 6; z = 1; }
 
-                card.style.transform = `translateX(${translateX}px) translateY(${translateY}px) rotateY(${rotateY}deg) scale(${scale})`;
+                card.style.transform = `translateX(${x}px) scale(${scale})`;
                 card.style.opacity = opacity;
+                card.style.filter = carouselReducedMotion ? 'none' : `blur(${blur}px)`;
                 card.style.zIndex = z;
-                card.style.pointerEvents = abs <= 2 ? 'auto' : 'none';
-                card.classList.toggle('active', offset === 0);
-                if (offset !== 0) card.classList.remove('is-flipped');
+                card.classList.toggle('is-center', absD === 0);
+                card.style.pointerEvents = absD <= 1 ? 'auto' : 'none';
             });
-            dots.forEach((dot, i) => dot.classList.toggle('active', i === realIndexOf(activeIndex)));
-            moveDotBlob();
+
+            if (dotsWrap) {
+                Array.from(dotsWrap.children).forEach((dot, i) => {
+                    dot.classList.toggle('is-active', i === current);
+                    dot.setAttribute('aria-selected', i === current ? 'true' : 'false');
+                });
+            }
         }
 
-        // After sliding into a clone, silently snap back to the matching real card —
-        // invisible to the eye since the clone is a pixel-perfect copy, but it's what
-        // removes the hard "reset to the left" jump and makes the loop feel continuous.
-        function settleIfInCloneZone() {
-            if (activeIndex >= BUFFER && activeIndex < BUFFER + realCount) return;
-            const mapped = BUFFER + realIndexOf(activeIndex);
-            carouselStage.classList.add('no-transition');
-            activeIndex = mapped;
-            render();
-            // eslint-disable-next-line no-unused-expressions
-            carouselStage.offsetHeight; // force reflow so the next transition re-enables cleanly
-            requestAnimationFrame(() => carouselStage.classList.remove('no-transition'));
+        function goTo(index) {
+            current = ((index % total) + total) % total;
+            paint();
         }
-
-        function goToIndex(index) {
-            activeIndex = index;
-            render();
-            window.clearTimeout(goToIndex._t);
-            goToIndex._t = window.setTimeout(settleIfInCloneZone, 720);
-        }
-
-        function goToReal(realIdx) {
-            goToIndex(BUFFER + realIdx);
-        }
+        function next() { goTo(current + 1); }
+        function prev() { goTo(current - 1); }
 
         cards.forEach((card, i) => {
             card.addEventListener('click', () => {
-                if (i === activeIndex) {
-                    card.classList.toggle('is-flipped');
-                } else {
-                    goToIndex(i);
-                }
+                const d = relPos(i);
+                if (d === 0) return;
+                goTo(i);
+                restartAutoplay();
             });
         });
 
-        dots.forEach(dot => {
-            dot.addEventListener('click', () => goToReal(parseInt(dot.getAttribute('data-goto'), 10)));
-        });
+        if (dotsWrap) {
+            cards.forEach((_, i) => {
+                const dot = document.createElement('button');
+                dot.type = 'button';
+                dot.className = 'carousel-dot';
+                dot.setAttribute('role', 'tab');
+                dot.setAttribute('aria-label', `Show stat ${i + 1} of ${total}`);
+                dot.addEventListener('click', () => { goTo(i); restartAutoplay(); });
+                dotsWrap.appendChild(dot);
+            });
+        }
 
-        // Swipe support
+        if (prevBtn) prevBtn.addEventListener('click', () => { prev(); restartAutoplay(); });
+        if (nextBtn) nextBtn.addEventListener('click', () => { next(); restartAutoplay(); });
+
+        paint();
+
+        let autoplayTimer = null;
+        function restartAutoplay() {
+            if (carouselReducedMotion) return;
+            window.clearInterval(autoplayTimer);
+            autoplayTimer = window.setInterval(next, 3200);
+        }
+        restartAutoplay();
+
+        carouselViewport.addEventListener('mouseenter', () => window.clearInterval(autoplayTimer));
+        carouselViewport.addEventListener('mouseleave', restartAutoplay);
+
         let touchStartX = null;
-        carouselStage.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; }, { passive: true });
-        carouselStage.addEventListener('touchend', (e) => {
-            if (touchStartX === null) return;
-            const delta = e.changedTouches[0].clientX - touchStartX;
-            if (Math.abs(delta) > 40) { goToIndex(delta < 0 ? activeIndex + 1 : activeIndex - 1); }
-            touchStartX = null;
+        carouselViewport.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+            window.clearInterval(autoplayTimer);
+        }, { passive: true });
+        carouselViewport.addEventListener('touchend', (e) => {
+            if (touchStartX !== null) {
+                const dx = e.changedTouches[0].clientX - touchStartX;
+                if (Math.abs(dx) > 40) { dx < 0 ? next() : prev(); }
+                touchStartX = null;
+            }
+            window.setTimeout(restartAutoplay, 1800);
         }, { passive: true });
 
-        window.addEventListener('resize', render);
-        render();
-
-        // Glassmorphic reveal for the dot navigation once it scrolls into view
-        if (dotsGlass) {
-            const glassObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        dotsGlass.classList.add('is-visible');
-                        glassObserver.disconnect();
-                    }
-                });
-            }, { threshold: 0.4 });
-            glassObserver.observe(dotsGlass);
-        }
+        window.addEventListener('resize', paint);
     }
 
-
-    // --- Comparison Table: synced row hover across the unified grid ---
     document.querySelectorAll('.premium-table > .table-row:not(.table-header)').forEach(row => {
         const cells = row.querySelectorAll('.col-dim, .col-asp, .col-tca');
         row.addEventListener('mouseenter', () => cells.forEach(c => c.classList.add('row-hover')));
         row.addEventListener('mouseleave', () => cells.forEach(c => c.classList.remove('row-hover')));
     });
 
-    // --- FAQ Accordion Logic ---
-    const faqHeaders = document.querySelectorAll('.faq-card-header');
-    faqHeaders.forEach(header => {
+    const faqCards = document.querySelectorAll('.faq-card');
+    const faqCollapseTimers = new WeakMap();
+
+    faqCards.forEach(card => {
+        const header = card.querySelector('.faq-card-header');
+        if (!header) return;
+
+        const openCard = () => {
+            const existing = faqCollapseTimers.get(card);
+            if (existing) { clearTimeout(existing); faqCollapseTimers.delete(card); }
+            card.classList.add('active');
+        };
+
+        const scheduleCollapse = () => {
+            const existing = faqCollapseTimers.get(card);
+            if (existing) clearTimeout(existing);
+            const timer = setTimeout(() => {
+                card.classList.remove('active');
+                faqCollapseTimers.delete(card);
+            }, 5000);
+            faqCollapseTimers.set(card, timer);
+        };
+
+        card.addEventListener('mouseenter', openCard);
+        card.addEventListener('mouseleave', scheduleCollapse);
+        header.addEventListener('focus', openCard);
+        header.addEventListener('blur', scheduleCollapse);
         header.addEventListener('click', () => {
-            const card = header.parentElement;
-            card.classList.toggle('active');
+            if (card.classList.contains('active')) {
+                const existing = faqCollapseTimers.get(card);
+                if (existing) clearTimeout(existing);
+                faqCollapseTimers.delete(card);
+                card.classList.remove('active');
+            } else {
+                openCard();
+            }
         });
     });
 
-    // --- Magnetic / Ripple Buttons ---
     const magneticButtons = document.querySelectorAll('.btn-primary');
     magneticButtons.forEach(btn => {
         if (window.matchMedia('(hover: hover) and (pointer: fine)').matches && !prefersReducedMotion) {
@@ -393,26 +405,52 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // --- Timeline Scroll-Driven Fill ---
-    const timelineContainer = document.getElementById('timeline-container');
-    const timelineFill = document.getElementById('timeline-fill');
+    const vtimeline = document.getElementById('vtimeline');
+    const vtimelineFill = document.getElementById('vtimeline-fill');
 
-    if (timelineContainer && timelineFill) {
-        const updateTimelineFill = () => {
-            const rect = timelineContainer.getBoundingClientRect();
+    if (vtimeline && vtimelineFill) {
+        const vItems = Array.from(vtimeline.querySelectorAll('.vtimeline-item'));
+
+        const updateVtimelineFill = () => {
+            const rect = vtimeline.getBoundingClientRect();
             const viewportH = window.innerHeight;
-            // Progress travels from "container top enters lower viewport" to "container bottom passes upper viewport"
-            const travel = rect.height + viewportH * 0.6;
+            const travel = rect.height + viewportH * 0.38;
             const traveled = viewportH * 0.85 - rect.top;
-            const progress = Math.min(Math.max(traveled / travel, 0), 1);
-            timelineFill.style.width = (progress * 100) + '%';
+            const progress = Math.min(Math.max((traveled / travel) * 1.08, 0), 1);
+            vtimelineFill.style.height = (progress * 100) + '%';
+
+            const n = vItems.length;
+            vItems.forEach((item, i) => {
+                const nodeProgress = n > 1 ? i / (n - 1) : 0;
+                item.classList.toggle('is-active', progress >= nodeProgress - 0.02);
+            });
         };
-        window.addEventListener('scroll', updateTimelineFill, { passive: true });
-        window.addEventListener('resize', updateTimelineFill);
-        updateTimelineFill();
+        let vtimelineTicking = false;
+        window.addEventListener('scroll', () => {
+            if (!vtimelineTicking) {
+                vtimelineTicking = true;
+                requestAnimationFrame(() => { updateVtimelineFill(); vtimelineTicking = false; });
+            }
+        }, { passive: true });
+        window.addEventListener('resize', updateVtimelineFill);
+        updateVtimelineFill();
+
+        const vtimelineObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('is-visible');
+            });
+        }, { threshold: 0.25 });
+        vItems.forEach(item => vtimelineObserver.observe(item));
+
+        vtimeline.querySelectorAll('.vtimeline-toggle').forEach(toggle => {
+            toggle.addEventListener('click', () => {
+                const card = toggle.closest('.vtimeline-card');
+                const expanded = card.classList.toggle('is-expanded');
+                toggle.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+            });
+        });
     }
 
-    // --- Count-Up Stat ---
     const counterEl = document.getElementById('client-counter');
     if (counterEl) {
         const target = parseInt(counterEl.getAttribute('data-target'), 10) || 0;
@@ -425,7 +463,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         counterEl.textContent = target + '+';
                         return;
                     }
-                    const duration = 1400;
+                    const duration = 3200;
                     const startTime = performance.now();
                     const tick = (now) => {
                         const elapsed = now - startTime;
@@ -442,99 +480,103 @@ document.addEventListener('DOMContentLoaded', () => {
         counterObserver.observe(counterEl);
     }
 
-    // --- 2D Canvas Dots Background ---
-    const initCanvasDots = () => {
-        if (prefersReducedMotion) return;
+    // --- Hero Text Sequence: Typewriter (Heading Only) ---
+    const initHeroText = () => {
+        const heading = document.getElementById('hero-heading');
+        if (!heading) return;
 
-        const canvas = document.getElementById('hero-canvas');
-        const container = document.getElementById('canvas-container');
-        if (!canvas || !container) return;
+        const headingText = heading.getAttribute('data-kinetic-text') || '';
 
-        const ctx = canvas.getContext('2d');
-        let width, height;
-        let dpr = window.devicePixelRatio || 1;
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            heading.textContent = headingText;
+            return;
+        }
 
-        const resize = () => {
-            width = container.clientWidth;
-            height = container.clientHeight;
-            canvas.width = width * dpr;
-            canvas.height = height * dpr;
-            ctx.setTransform(1, 0, 0, 1, 0, 0);
-            ctx.scale(dpr, dpr);
-            initDots();
+        heading.innerHTML = '';
+        const startDelay = 1.2; 
+        const charDelay = 0.035; 
+        
+        [...headingText].forEach((ch, i) => {
+            if (ch === ' ') {
+                heading.appendChild(document.createTextNode('\u00A0'));
+                return;
+            }
+            const span = document.createElement('span');
+            span.className = 'heading-char';
+            span.textContent = ch;
+            span.style.animationDelay = (startDelay + (i * charDelay)) + 's';
+            heading.appendChild(span);
+        });
+    };
+    initHeroText();
+
+    const initIntroSplash = () => {
+        const overlay = document.getElementById('intro-overlay');
+        const canvas = document.getElementById('intro-ascii-canvas');
+        if (!overlay) return;
+
+        const finish = () => {
+            document.documentElement.style.overflow = '';
+            overlay.classList.add('is-leaving');
+            overlay.setAttribute('aria-hidden', 'true');
+            window.setTimeout(() => { overlay.classList.add('is-done'); overlay.remove(); }, 750);
         };
 
-        let mouseX = -1000;
-        let mouseY = -1000;
-        document.addEventListener('mousemove', (e) => {
-            const rect = container.getBoundingClientRect();
-            mouseX = e.clientX - rect.left;
-            mouseY = e.clientY - rect.top;
-        });
+        if (prefersReducedMotion) { finish(); return; }
 
-        // Smaller, more refined grid
-        const spacing = 24;
-        let dots = [];
+        document.documentElement.style.overflow = 'hidden';
 
-        const initDots = () => {
-            dots = [];
-            for (let x = 0; x < width; x += spacing) {
-                for (let y = 0; y < height; y += spacing) {
-                    dots.push({
-                        baseX: x + spacing / 2,
-                        baseY: y + spacing / 2,
-                        x: x + spacing / 2,
-                        y: y + spacing / 2,
-                    });
+        if (canvas && canvas.getContext) {
+            const ctx = canvas.getContext('2d');
+            const chars = ['0', '1', '\u00B7', '+'];
+            const dpr = Math.min(window.devicePixelRatio || 1, 2);
+            let rings = [], w = 0, h = 0, raf = null;
+
+            function buildRings() {
+                rings = [];
+                const cx = w / 2, cy = h / 2;
+                const maxR = Math.min(w, h) * 0.34;
+                if (maxR <= 0) return;
+                const ringCount = Math.max(6, Math.round(maxR / 22));
+                for (let i = 0; i < ringCount; i++) {
+                    const r = ((i + 1) / ringCount) * maxR;
+                    const count = Math.max(8, Math.floor((2 * Math.PI * r) / 16));
+                    const points = [];
+                    const phase = i * 0.35;
+                    for (let j = 0; j < count; j++) {
+                        const angle = (j / count) * Math.PI * 2 + phase;
+                        points.push({ x: cx + Math.cos(angle) * r, y: cy + Math.sin(angle) * r, ch: chars[(i + j) % chars.length] });
+                    }
+                    rings.push({ points, t: i / ringCount });
                 }
             }
-        };
+            function resize() {
+                w = window.innerWidth; h = window.innerHeight;
+                canvas.width = w * dpr; canvas.height = h * dpr;
+                canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
+                ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+                buildRings();
+            }
+            function draw(time) {
+                ctx.clearRect(0, 0, w, h);
+                ctx.font = '11px monospace'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+                rings.forEach((ring, i) => {
+                    const pulse = 0.5 + 0.5 * Math.sin((time || 0) / 1000 * 1.3 - i * 0.5);
+                    const alpha = Math.max(0, (1 - ring.t) * 0.55 * pulse);
+                    const mix = Math.min(1, ring.t / 0.55);
+                    const r = 0 + (0 - 0) * mix, g = 208 + (74 - 208) * mix, b = 250 + (252 - 250) * mix;
+                    ctx.fillStyle = `rgba(${r | 0}, ${g | 0}, ${b | 0}, ${alpha.toFixed(3)})`;
+                    ring.points.forEach(p => ctx.fillText(p.ch, p.x, p.y));
+                });
+                raf = requestAnimationFrame(draw);
+            }
+            resize(); draw(0);
+            window.addEventListener('resize', resize);
+            window.addEventListener('beforeunload', () => raf && cancelAnimationFrame(raf));
+        }
 
-        window.addEventListener('resize', resize);
-        resize();
-
-        const animate = () => {
-            requestAnimationFrame(animate);
-            ctx.clearRect(0, 0, width, height);
-
-            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-            const interactionRadius = 110;
-
-            dots.forEach(dot => {
-                const dx = mouseX - dot.baseX;
-                const dy = mouseY - dot.baseY;
-                const dist = Math.sqrt(dx * dx + dy * dy);
-
-                let targetX = dot.baseX;
-                let targetY = dot.baseY;
-                let size = 1;
-
-                if (dist < interactionRadius) {
-                    const force = (interactionRadius - dist) / interactionRadius;
-                    targetX -= (dx / dist) * force * 12;
-                    targetY -= (dy / dist) * force * 12;
-                    size += force * 1.3;
-
-                    if (isDark) {
-                        ctx.fillStyle = `rgba(0, 208, 250, ${0.15 + force * 0.6})`;
-                    } else {
-                        ctx.fillStyle = `rgba(0, 74, 252, ${0.15 + force * 0.6})`;
-                    }
-                } else {
-                    ctx.fillStyle = isDark ? 'rgba(255, 255, 255, 0.12)' : 'rgba(0, 0, 0, 0.12)';
-                }
-
-                dot.x += (targetX - dot.x) * 0.1;
-                dot.y += (targetY - dot.y) * 0.1;
-
-                ctx.beginPath();
-                ctx.arc(dot.x, dot.y, size, 0, Math.PI * 2);
-                ctx.fill();
-            });
-        };
-
-        animate();
+        const totalTimer = window.setTimeout(finish, 1650);
+        overlay.addEventListener('click', () => { clearTimeout(totalTimer); finish(); }, { once: true });
     };
-
-    initCanvasDots();
+    initIntroSplash();
 });
